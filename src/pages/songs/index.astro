@@ -26,23 +26,6 @@ const categories = [...new Set(songs.map(song => song.data.category))].sort();
       <p class="subtitle">Bible verses brought to life through music.</p>
     </div>
 
-    <!-- Browse by Category Section -->
-    <section class="category-section">
-      <h2>Browse by Category</h2>
-      <div class="category-grid">
-        {categories.map(category => {
-          // Count songs in this category
-          const count = songs.filter(s => s.data.category === category).length;
-          return (
-            <a href={`/songs/category/${category.toLowerCase().replace(/\s+/g, '-')}`} class="category-button">
-              <span class="category-name">{category}</span>
-              <span class="category-count">{count} {count === 1 ? 'Song' : 'Songs'}</span>
-            </a>
-          );
-        })}
-      </div>
-    </section>
-
     <!-- Featured Songs Section -->
     {featuredSongs.length > 0 && (
       <section class="content-section">
@@ -80,6 +63,23 @@ const categories = [...new Set(songs.map(song => song.data.category))].sort();
         </div>
       </section>
     )}
+
+    <!-- Browse by Category Section -->
+    <section class="category-section">
+      <h2>Browse by Category</h2>
+      <div class="category-grid">
+        {categories.map(category => {
+          // Count songs in this category
+          const count = songs.filter(s => s.data.category === category).length;
+          return (
+            <a href={`/songs/category/${category.toLowerCase().replace(/\s+/g, '-')}`} class="category-button">
+              <span class="category-name">{category}</span>
+              <span class="category-count">{count} {count === 1 ? 'Song' : 'Songs'}</span>
+            </a>
+          );
+        })}
+      </div>
+    </section>
   </div>
 </Layout>
 
