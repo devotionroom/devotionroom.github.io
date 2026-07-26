@@ -1,0 +1,215 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const resources = await getCollection('resources');
+const allTopics = [...new Set(resources.flatMap(res => res.data.topic))].sort();
+---
+
+<Layout title="Teaching Resources">
+  <div class="container section">
+    <Breadcrumbs items={[{ label: 'Resources', href: '/resources' }]} />
+    
+    <div class="header-container">
+      <h1>Teaching Resources</h1>
+      <p class="subtitle">Printables, activities, and tools for your ministry.</p>
+    </div>
+    
+    <div class="filter-bar">
+      <span class="filter-label">Filter by Topic:</span>
+      <select id="topicFilter" class="filter-select">
+        <option value="all">All Topics</option>
+        {allTopics.map(topic => (
+          <option value={topic}>{topic}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="resource-grid" id="resourceGrid">
+      {resources.map(resource => (
+        <a 
+          href={`/resources/${resource.slug}`} 
+          class="resource-card" 
+          data-topics={resource.data.topic.join(',')}
+        >
+          <div class="card-icon">
+            {resource.data.category === 'Printable' ? '📄' : '📦'}
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">{resource.data.title}</h3>
+            {resource.data.description && (
+              <p class="card-desc">{resource.data.description}</p>
+            )}
+            
+            <div class="tags">
+              <span class="tag category-tag">{resource.data.category}</span>
+              {resource.data.topic.slice(0, 2).map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    
+    <div id="noResults" class="no-results" style="display: none;">
+      <p>No resources found for the selected topic.</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterSelect = document.getElementById('topicFilter') as HTMLSelectElement;
+    const cards = document.querySelectorAll('.resource-card') as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById('noResults');
+
+    if (!filterSelect || !cards.length) return;
+
+    filterSelect.addEventListener('change', (e) => {
+      const target = e.target as HTMLSelectElement;
+      const selectedTopic = target.value;
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const topics = card.dataset.topics?.split(',') || [];
+        if (selectedTopic === 'all' || topics.includes(selectedTopic)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+  });
+</script>
+
+<style>
+  .header-container {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .header-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+  
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: var(--spacing-lg);
+    background: var(--color-surface);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+  
+  .filter-label {
+    font-weight: 500;
+  }
+  
+  .filter-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    background: white;
+    min-width: 200px;
+  }
+  
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  .resource-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    padding: var(--spacing-lg);
+    gap: 1rem;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .resource-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--color-accent-primary);
+  }
+  
+  .card-icon {
+    font-size: 2rem;
+    background: var(--color-bg-secondary);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .card-title {
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .card-desc {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+  
+  .tag {
+    font-size: 0.75rem;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  
+  .category-tag {
+    background: var(--color-accent-primary);
+    color: white;
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--color-text-secondary);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+  }
+</style>

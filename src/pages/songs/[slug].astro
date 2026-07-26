@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export async function getStaticPaths() {
+  const songs = await getCollection('songs');
+  return songs.map(song => ({
+    params: { slug: song.slug },
+    props: { song },
+  }));
+}
+
+const { song } = Astro.props;
+const { Content } = await song.render();
+---
+
+<ContentLayout 
+  title={song.data.title}
+  date={song.data.date}
+  breadcrumbs={[
+    { label: 'Songs', href: '/songs' },
+    { label: song.data.title, href: `/songs/${song.slug}` }
+  ]}
+>
+  {song.data.youtubeId && (
+    <div class="video-container">
+      <iframe 
+        width="560" 
+        height="315" 
+        src={`https://www.youtube.com/embed/${song.data.youtubeId}`} 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  )}
+
+  <div class="song-meta">
+    {song.data.bibleReference && (
+      <p><strong>Scripture Reference:</strong> {song.data.bibleReference}</p>
+    )}
+  </div>
+
+  <Content />
+</ContentLayout>
+
+<style>
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+    height: 0;
+    overflow: hidden;
+    margin-bottom: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-md);
+  }
+  
+  .song-meta {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+</style>

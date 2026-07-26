@@ -1,0 +1,131 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container footer-container">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text">Devotion Room</span>
+      </div>
+      <p class="mission-text">
+        Helping make God's Word accessible, memorable, and meaningful through creative teaching resources and Scripture-based content.
+      </p>
+    </div>
+    
+    <div class="footer-links">
+      <div class="link-group">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="/lessons">Bible Lessons</a></li>
+          <li><a href="/devotionals">Devotionals</a></li>
+          <li><a href="/songs">Scripture Songs</a></li>
+          <li><a href="/resources">Printables</a></li>
+        </ul>
+      </div>
+      
+      <div class="link-group">
+        <h4>About</h4>
+        <ul>
+          <li><a href="/about">Our Mission</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/statement-of-faith">Statement of Faith</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container bottom-container">
+      <p>&copy; {year} Devotion Room. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--spacing-xl);
+    margin-top: var(--spacing-xxl);
+  }
+  
+  .footer-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .footer-brand {
+    max-width: 350px;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .logo-text {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+  }
+  
+  .mission-text {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+  }
+  
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  .link-group h4 {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+  }
+  
+  .link-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .link-group a {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+  }
+  
+  .link-group a:hover {
+    color: var(--color-accent-primary);
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid var(--color-border);
+    padding: var(--spacing-md) 0;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+  }
+  
+  .bottom-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

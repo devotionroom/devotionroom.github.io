@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export async function getStaticPaths() {
+  const lessons = await getCollection('lessons');
+  return lessons.map(lesson => ({
+    params: { slug: lesson.slug },
+    props: { lesson },
+  }));
+}
+
+const { lesson } = Astro.props;
+const { Content } = await lesson.render();
+---
+
+<ContentLayout 
+  title={lesson.data.title}
+  date={lesson.data.date}
+  breadcrumbs={[
+    { label: 'Lessons', href: '/lessons' },
+    { label: lesson.data.title, href: `/lessons/${lesson.slug}` }
+  ]}
+>
+  <div class="lesson-meta-box">
+    {lesson.data.passage && (
+      <div class="meta-item">
+        <strong>Bible Passage:</strong> {lesson.data.passage}
+      </div>
+    )}
+    {lesson.data.memoryVerse && (
+      <div class="meta-item memory-verse">
+        <strong>Memory Verse:</strong>
+        <blockquote>{lesson.data.memoryVerse}</blockquote>
+      </div>
+    )}
+    <div class="meta-grid">
+      {lesson.data.ageGroup && <div><strong>Age Group:</strong> {lesson.data.ageGroup}</div>}
+      {lesson.data.estimatedTime && <div><strong>Time:</strong> {lesson.data.estimatedTime}</div>}
+      {lesson.data.difficulty && <div><strong>Difficulty:</strong> {lesson.data.difficulty}</div>}
+    </div>
+    {lesson.data.objective && (
+      <div class="meta-item">
+        <strong>Objective:</strong> {lesson.data.objective}
+      </div>
+    )}
+  </div>
+
+  <Content />
+
+  {lesson.data.downloads && lesson.data.downloads.length > 0 && (
+    <div class="downloads-section">
+      <h3>Downloads</h3>
+      <ul class="downloads-list">
+        {lesson.data.downloads.map(download => (
+          <li>
+            <a href={download.url} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+              📄 {download.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</ContentLayout>
+
+<style>
+  .lesson-meta-box {
+    background: var(--color-bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--color-border);
+  }
+  
+  .meta-item {
+    margin-bottom: 1rem;
+  }
+  
+  .memory-verse blockquote {
+    margin: 0.5rem 0 0 0;
+    padding: 1rem;
+    background: white;
+    border-left: 4px solid var(--color-accent-primary);
+    border-radius: var(--radius-sm);
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+  
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .downloads-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .downloads-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .downloads-list .btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+</style>

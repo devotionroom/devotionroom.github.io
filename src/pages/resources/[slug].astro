@@ -1,0 +1,105 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+
+export async function getStaticPaths() {
+  const resources = await getCollection('resources');
+  return resources.map(resource => ({
+    params: { slug: resource.slug },
+    props: { resource },
+  }));
+}
+
+const { resource } = Astro.props;
+const { Content } = await resource.render();
+---
+
+<ContentLayout 
+  title={resource.data.title}
+  date={resource.data.date}
+  breadcrumbs={[
+    { label: 'Resources', href: '/resources' },
+    { label: resource.data.title, href: `/resources/${resource.slug}` }
+  ]}
+>
+  <div class="resource-meta-box">
+    <div class="meta-item">
+      <span class="tag category-tag">{resource.data.category}</span>
+    </div>
+    
+    {resource.data.description && (
+      <p class="description">{resource.data.description}</p>
+    )}
+  </div>
+
+  <Content />
+
+  {resource.data.downloadLinks && resource.data.downloadLinks.length > 0 && (
+    <div class="downloads-section">
+      <h3>Download Files</h3>
+      <ul class="downloads-list">
+        {resource.data.downloadLinks.map(download => (
+          <li>
+            <a href={download.url} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+              ↓ Download {download.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</ContentLayout>
+
+<style>
+  .resource-meta-box {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .description {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+  
+  .tag {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  
+  .category-tag {
+    background: var(--color-accent-primary);
+    color: white;
+  }
+  
+  .downloads-section {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+  
+  .downloads-section h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .downloads-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .downloads-list .btn {
+    width: 100%;
+    justify-content: center;
+  }
+</style>

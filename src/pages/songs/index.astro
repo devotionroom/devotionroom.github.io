@@ -1,0 +1,237 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const songs = await getCollection('songs');
+const allTopics = [...new Set(songs.flatMap(song => song.data.topic))].sort();
+---
+
+<Layout title="Scripture Songs">
+  <div class="container section">
+    <Breadcrumbs items={[{ label: 'Songs', href: '/songs' }]} />
+    
+    <div class="header-container">
+      <h1>Scripture Songs</h1>
+      <p class="subtitle">Bible verses brought to life through music.</p>
+    </div>
+    
+    <div class="filter-bar">
+      <span class="filter-label">Filter by Topic:</span>
+      <select id="topicFilter" class="filter-select">
+        <option value="all">All Topics</option>
+        {allTopics.map(topic => (
+          <option value={topic}>{topic}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="song-grid" id="songGrid">
+      {songs.map(song => (
+        <a 
+          href={`/songs/${song.slug}`} 
+          class="song-card" 
+          data-topics={song.data.topic.join(',')}
+        >
+          {song.data.youtubeId && (
+            <div class="video-thumbnail">
+              <img src={`https://img.youtube.com/vi/${song.data.youtubeId}/hqdefault.jpg`} alt={`${song.data.title} thumbnail`} />
+              <div class="play-icon">▶</div>
+            </div>
+          )}
+          <div class="card-content">
+            <h3 class="card-title">{song.data.title}</h3>
+            {song.data.bibleReference && (
+              <div class="card-meta">📖 {song.data.bibleReference}</div>
+            )}
+            
+            <div class="tags">
+              {song.data.topic.slice(0, 3).map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    
+    <div id="noResults" class="no-results" style="display: none;">
+      <p>No songs found for the selected topic.</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterSelect = document.getElementById('topicFilter') as HTMLSelectElement;
+    const cards = document.querySelectorAll('.song-card') as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById('noResults');
+
+    if (!filterSelect || !cards.length) return;
+
+    filterSelect.addEventListener('change', (e) => {
+      const target = e.target as HTMLSelectElement;
+      const selectedTopic = target.value;
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const topics = card.dataset.topics?.split(',') || [];
+        if (selectedTopic === 'all' || topics.includes(selectedTopic)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+  });
+</script>
+
+<style>
+  .header-container {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .header-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+  
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: var(--spacing-lg);
+    background: var(--color-surface);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+  
+  .filter-label {
+    font-weight: 500;
+  }
+  
+  .filter-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    background: white;
+    min-width: 200px;
+  }
+  
+  .song-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  .song-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    overflow: hidden;
+  }
+  
+  .song-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--color-accent-primary);
+  }
+  
+  .video-thumbnail {
+    width: 100%;
+    aspect-ratio: 16/9;
+    position: relative;
+    background: #000;
+    overflow: hidden;
+  }
+  
+  .video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+  }
+  
+  .song-card:hover .video-thumbnail img {
+    opacity: 1;
+  }
+  
+  .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent-primary);
+    font-size: 1.25rem;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .card-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .card-title {
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .card-meta {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+  }
+  
+  .tag {
+    font-size: 0.75rem;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--color-text-secondary);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+  }
+</style>

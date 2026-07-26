@@ -1,10 +1,189 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import ResourceCard from '../components/ResourceCard.astro';
+import FeaturedSection from '../components/FeaturedSection.astro';
+
+// Fetch the latest 3 devotionals
+const allDevotionals = await getCollection('devotionals');
+const latestDevotionals = allDevotionals
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 ---
 
-<Layout title="Devotion Room">
-  <main>
-    <h1>Devotion Room - Coming Soon</h1>
-    <p>A modern, scalable Christian ministry resource website.</p>
-  </main>
+<Layout title="Welcome">
+  <Hero />
+
+  <section id="resources" class="section">
+    <div class="container">
+      <div class="text-center mb-xl">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Explore Our Resources</h2>
+        <p style="color: var(--color-text-secondary); max-width: 600px; margin: 0 auto;">Discover free materials designed to help you teach and grow in God's Word.</p>
+      </div>
+      
+      <div class="resource-grid">
+        <ResourceCard 
+          title="Sunday School"
+          description="Bible lessons, activities, games, crafts, and teaching ideas for kids."
+          href="/lessons"
+          icon="📚"
+        />
+        <ResourceCard 
+          title="Devotionals"
+          description="Biblical encouragement and reflections for everyday faith and life."
+          href="/devotionals"
+          icon="🕊️"
+        />
+        <ResourceCard 
+          title="Scripture Songs"
+          description="Bible verses brought to life through music and creative lyric videos."
+          href="/songs"
+          icon="🎵"
+        />
+        <ResourceCard 
+          title="Teaching Resources"
+          description="Printable materials, worksheets, and tools for teachers and families."
+          href="/resources"
+          icon="📝"
+        />
+      </div>
+    </div>
+  </section>
+
+  <FeaturedSection 
+    title="Latest Devotionals" 
+    bgColor="secondary"
+    viewAllLink="/devotionals"
+  >
+    {latestDevotionals.map(devotional => (
+      <a href={`/devotionals/${devotional.slug}`} class="placeholder-card" style="text-decoration: none;">
+        <div class="placeholder-content" style="height: 100%;">
+          {devotional.data.topic.length > 0 && (
+            <div class="placeholder-tag">{devotional.data.topic[0]}</div>
+          )}
+          <h3 style="color: var(--color-text-primary);">{devotional.data.title}</h3>
+          {devotional.data.scripture && (
+            <p style="color: var(--color-text-secondary); font-style: italic;">"{devotional.data.scripture}"</p>
+          )}
+        </div>
+      </a>
+    ))}
+  </FeaturedSection>
+
+  <section class="section about-section">
+    <div class="container about-container">
+      <div class="about-content">
+        <h2>About Devotion Room</h2>
+        <p>
+          Devotion Room exists to help make God's Word accessible, memorable, and meaningful through creative teaching resources and Scripture-based content.
+        </p>
+        <p>
+          Whether you are a Sunday school teacher looking for engaging lessons, a parent seeking devotionals for your family, or a believer wanting to memorize Scripture through song, you'll find resources here designed to encourage your faith.
+        </p>
+        <a href="/about" class="btn btn-primary" style="margin-top: 1rem;">Read Our Story</a>
+      </div>
+      <div class="about-image">
+        <div class="abstract-shape">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="var(--color-accent-secondary)" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87.1,14.6,81.5,29.1,73.1,41.9C64.6,54.7,53.2,65.8,39.7,73.5C26.1,81.3,10.5,85.7,-4.8,84.1C-20.1,82.5,-35.1,74.9,-48.5,65.1C-61.9,55.3,-73.7,43.3,-80.4,29C-87.1,14.6,-88.8,-2,-84.9,-16.9C-81,-31.8,-71.5,-44.9,-59.5,-54.2C-47.5,-63.5,-33,-69,-18.8,-74.6C-4.6,-80.2,9.3,-85.9,23.3,-84.3C37.3,-82.7,51.4,-73.7,44.7,-76.4Z" transform="translate(100 100)" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .text-center {
+    text-align: center;
+  }
+  
+  .mb-xl {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  .placeholder-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    transition: transform var(--transition-fast);
+  }
+  
+  .placeholder-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .placeholder-content {
+    padding: var(--spacing-lg);
+  }
+  
+  .placeholder-tag {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-accent-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .placeholder-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .placeholder-content p {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  
+  /* About Section */
+  .about-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xxl);
+    align-items: center;
+  }
+  
+  .about-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .about-content p {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .abstract-shape {
+    width: 100%;
+    max-width: 400px;
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 768px) {
+    .about-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .about-image {
+      order: -1;
+    }
+  }
+</style>

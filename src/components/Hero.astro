@@ -1,0 +1,104 @@
+---
+---
+<section class="hero section">
+  <div class="container hero-container">
+    <div class="hero-content animate-fade-in">
+      <div class="badge">Welcome to Devotion Room</div>
+      <h1 class="hero-title">
+        Helping families grow closer to God
+      </h1>
+      <p class="hero-subtitle">
+        Discover Scripture, stories, music, and creative Bible resources designed to make God's Word accessible, memorable, and meaningful.
+      </p>
+      <div class="hero-actions">
+        <a href="#resources" class="btn btn-primary">Explore Resources</a>
+        <a href="/devotionals" class="btn btn-secondary">Read Devotionals</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: var(--spacing-xxl);
+    padding-bottom: var(--spacing-xl);
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+  }
+  
+  /* Decorative background element */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--color-accent-secondary) 0%, transparent 70%);
+    opacity: 0.1;
+    border-radius: 50%;
+    z-index: 0;
+  }
+  
+  .hero-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+  }
+  
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    background-color: color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
+    color: var(--color-accent-primary);
+    border-radius: 20px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-lg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .hero-title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+    margin-bottom: var(--spacing-lg);
+    letter-spacing: -0.02em;
+  }
+  
+  .hero-subtitle {
+    font-size: clamp(1.125rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  @media (max-width: 640px) {
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .hero-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

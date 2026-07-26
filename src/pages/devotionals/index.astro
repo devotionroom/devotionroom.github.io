@@ -1,0 +1,195 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+
+const devotionals = await getCollection('devotionals');
+
+// Get unique topics for the filter
+const allTopics = [...new Set(devotionals.flatMap(dev => dev.data.topic))].sort();
+---
+
+<Layout title="Devotionals">
+  <div class="container section">
+    <Breadcrumbs items={[{ label: 'Devotionals', href: '/devotionals' }]} />
+    
+    <div class="header-container">
+      <h1>Devotionals</h1>
+      <p class="subtitle">Biblical encouragement and reflections for everyday faith.</p>
+    </div>
+    
+    <div class="filter-bar">
+      <span class="filter-label">Filter by Topic:</span>
+      <select id="topicFilter" class="filter-select">
+        <option value="all">All Topics</option>
+        {allTopics.map(topic => (
+          <option value={topic}>{topic}</option>
+        ))}
+      </select>
+    </div>
+
+    <div class="devotional-grid" id="devotionalGrid">
+      {devotionals.map(devotional => (
+        <a 
+          href={`/devotionals/${devotional.slug}`} 
+          class="devotional-card" 
+          data-topics={devotional.data.topic.join(',')}
+        >
+          <div class="card-content">
+            <h3 class="card-title">{devotional.data.title}</h3>
+            {devotional.data.scripture && (
+              <p class="scripture-preview">"{devotional.data.scripture}"</p>
+            )}
+            
+            <div class="tags">
+              {devotional.data.topic.slice(0, 3).map(tag => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    
+    <div id="noResults" class="no-results" style="display: none;">
+      <p>No devotionals found for the selected topic.</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterSelect = document.getElementById('topicFilter') as HTMLSelectElement;
+    const cards = document.querySelectorAll('.devotional-card') as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById('noResults');
+
+    if (!filterSelect || !cards.length) return;
+
+    filterSelect.addEventListener('change', (e) => {
+      const target = e.target as HTMLSelectElement;
+      const selectedTopic = target.value;
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const topics = card.dataset.topics?.split(',') || [];
+        if (selectedTopic === 'all' || topics.includes(selectedTopic)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    });
+  });
+</script>
+
+<style>
+  .header-container {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .header-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+  
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: var(--spacing-lg);
+    background: var(--color-surface);
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+  
+  .filter-label {
+    font-weight: 500;
+  }
+  
+  .filter-select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    background: white;
+    min-width: 200px;
+  }
+  
+  .devotional-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  .devotional-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .devotional-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--color-accent-primary);
+  }
+  
+  .card-title {
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+  }
+  
+  .scripture-preview {
+    color: var(--color-text-secondary);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1rem;
+  }
+  
+  .tag {
+    font-size: 0.75rem;
+    background: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--color-text-secondary);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+  }
+</style>
