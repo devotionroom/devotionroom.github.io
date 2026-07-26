@@ -52,8 +52,12 @@ const songs = defineCollection({
     date: z.date(),
     bibleReference: z.string().optional(),
     youtubeId: z.string().optional(),
+    description: z.string().optional(),
+    thumbnail: z.string().optional(),
+    featured: z.boolean().default(false),
     
     // Taxonomy
+    category: z.string(),
     topic: z.array(z.string()).default([]),
     book: z.string().optional(),
     

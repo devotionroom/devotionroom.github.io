@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SongCard from '../../../components/SongCard.astro';
+
+export async function getStaticPaths() {
+  const songs = await getCollection('songs');
+  
+  // Get unique categories and normalize them for URLs
+  const categories = [...new Set(songs.map(song => song.data.category))];
+  
+  return categories.map(category => {
+    // Basic slugification (lowercase, replace spaces with hyphens)
+    const slug = category.toLowerCase().replace(/\s+/g, '-');
+    return {
+      params: { category: slug },
+      props: { 
+        categoryName: category,
+        songs: songs.filter(song => song.data.category === category)
+      },
+    };
+  });
+}
+
+const { categoryName, songs } = Astro.props;
+---
+
+<Layout title={`${categoryName} Songs`}>
+  <div class="container section">
+    <Breadcrumbs items={[
+      { label: 'Songs', href: '/songs' },
+      { label: categoryName, href: `/songs/category/${Astro.params.category}` }
+    ]} />
+    
+    <div class="header-container">
+      <span class="category-tag">Category</span>
+      <h1>{categoryName} Songs</h1>
+      <p class="subtitle">{songs.length} {songs.length === 1 ? 'song' : 'songs'} in this category</p>
+    </div>
+
+    <div class="song-grid">
+      {songs.map(song => (
+        <SongCard 
+          title={song.data.title}
+          slug={song.slug}
+          bibleReference={song.data.bibleReference}
+          youtubeId={song.data.youtubeId}
+          thumbnail={song.data.thumbnail}
+          category={song.data.category}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .header-container {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-bg-secondary);
+  }
+  
+  .category-tag {
+    display: inline-block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-primary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .header-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+  
+  .song-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+</style>
