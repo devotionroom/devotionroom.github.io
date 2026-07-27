@@ -9,8 +9,8 @@ topic: ["Faith", "Protection", "Spiritual Warfare"]
 book: "Ephesians"
 estimatedTime: "45 mins"
 difficulty: "Beginner"
-relatedDevotionals: []
-relatedSongs: []
+relatedDevotionals: ["sample-devotional"]
+relatedSongs: ["psalm-100-scripture-song"]
 downloads:
   - name: "Armor of God Coloring Page"
     url: "/downloads/armor-coloring.pdf"
