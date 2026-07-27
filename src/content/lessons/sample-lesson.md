@@ -10,7 +10,7 @@ book: "Ephesians"
 estimatedTime: "45 mins"
 difficulty: "Beginner"
 relatedDevotionals: ["sample-devotional"]
-relatedSongs: ["sample-song"]
+relatedSongs:
 downloads:
   - name: "Armor of God Coloring Page"
     url: "/downloads/armor-coloring.pdf"
