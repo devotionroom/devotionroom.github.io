@@ -1,13 +1,13 @@
 ---
 ---
-<header class="header">
+<header class="header" id="main-header">
   <div class="container header-container">
-    <a href="/" class="logo">
+    <a href="/" class="logo" aria-label="Devotion Room Home">
       <img src="/images/devotion-room-logo.png" alt="Devotion Room" class="logo-image" />
     </a>
     
-    <nav class="main-nav">
-      <ul>
+    <nav class="main-nav" id="main-nav" aria-label="Primary Navigation">
+      <ul class="nav-list">
         <li><a href="/lessons">Lessons</a></li>
         <li><a href="/devotionals">Devotionals</a></li>
         <li><a href="/songs">Songs</a></li>
@@ -15,15 +15,58 @@
       </ul>
     </nav>
     
-    <div class="mobile-menu-btn">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle navigation menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon-open">
         <line x1="3" y1="12" x2="21" y2="12"></line>
         <line x1="3" y1="6" x2="21" y2="6"></line>
         <line x1="3" y1="18" x2="21" y2="18"></line>
       </svg>
-    </div>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon-close" style="display: none;">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const header = document.getElementById('main-header');
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const nav = document.getElementById('main-nav');
+    const iconOpen = menuBtn?.querySelector('.menu-icon-open') as HTMLElement;
+    const iconClose = menuBtn?.querySelector('.menu-icon-close') as HTMLElement;
+
+    // Handle scroll for sticky header effect
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        header?.classList.add('is-scrolled');
+      } else {
+        header?.classList.remove('is-scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial state
+
+    // Handle mobile menu toggle
+    menuBtn?.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      
+      if (isExpanded) {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        nav?.classList.remove('is-open');
+        if (iconOpen) iconOpen.style.display = 'block';
+        if (iconClose) iconClose.style.display = 'none';
+      } else {
+        menuBtn.setAttribute('aria-expanded', 'true');
+        nav?.classList.add('is-open');
+        if (iconOpen) iconOpen.style.display = 'none';
+        if (iconClose) iconClose.style.display = 'block';
+      }
+    });
+  });
+</script>
 
 <style>
   .header {
@@ -34,6 +77,13 @@
     z-index: 100;
     backdrop-filter: blur(8px);
     background-color: color-mix(in srgb, var(--color-surface) 90%, transparent);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .header.is-scrolled {
+    background-color: var(--color-surface);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-bottom-color: transparent;
   }
   
   .header-container {
@@ -41,20 +91,31 @@
     justify-content: space-between;
     align-items: center;
     height: 80px;
+    transition: height 0.3s ease;
+  }
+  
+  .header.is-scrolled .header-container {
+    height: 70px; /* Slightly slimmer when scrolled */
   }
   
   .logo {
     display: flex;
     align-items: center;
+    z-index: 101; /* Keep above mobile menu */
   }
   
   .logo-image {
     height: 48px;
     width: auto;
     object-fit: contain;
+    transition: height 0.3s ease;
   }
   
-  .main-nav ul {
+  .header.is-scrolled .logo-image {
+    height: 40px; /* Scale down logo slightly */
+  }
+  
+  .nav-list {
     display: flex;
     gap: 2rem;
     list-style: none;
@@ -68,6 +129,8 @@
     color: var(--color-text-secondary);
     font-size: 0.95rem;
     position: relative;
+    text-decoration: none;
+    padding: 0.5rem 0;
   }
   
   .main-nav a::after {
@@ -75,32 +138,94 @@
     position: absolute;
     width: 0;
     height: 2px;
-    bottom: -4px;
+    bottom: 0;
     left: 0;
     background-color: var(--color-accent-primary);
     transition: width var(--transition-smooth);
   }
   
-  .main-nav a:hover {
+  .main-nav a:hover, .main-nav a:focus {
     color: var(--color-accent-primary);
+    outline: none;
   }
   
-  .main-nav a:hover::after {
+  .main-nav a:hover::after, .main-nav a:focus::after {
     width: 100%;
   }
   
   .mobile-menu-btn {
     display: none;
+    background: none;
+    border: none;
     cursor: pointer;
     color: var(--color-text-primary);
+    padding: 0.5rem;
+    z-index: 101; /* Keep above mobile menu */
+  }
+  
+  .mobile-menu-btn:focus {
+    outline: 2px solid var(--color-accent-primary);
+    border-radius: 4px;
   }
   
   @media (max-width: 768px) {
-    .main-nav {
-      display: none; /* In a full app, this would toggle a mobile menu */
+    .header-container {
+      height: 70px;
     }
+    
+    .logo-image {
+      height: 40px;
+    }
+    
     .mobile-menu-btn {
       display: block;
+    }
+    
+    .main-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--color-surface);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      border-top: 1px solid var(--color-border);
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .main-nav.is-open {
+      max-height: 400px;
+      visibility: visible;
+      opacity: 1;
+      padding: 1rem 0;
+    }
+    
+    .nav-list {
+      flex-direction: column;
+      gap: 0;
+    }
+    
+    .main-nav a {
+      display: block;
+      padding: 1rem var(--spacing-lg);
+      font-size: 1.1rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+    
+    .main-nav li:last-child a {
+      border-bottom: none;
+    }
+    
+    .main-nav a::after {
+      display: none; /* Remove underline effect on mobile */
+    }
+    
+    .main-nav a:hover, .main-nav a:focus {
+      background-color: var(--color-bg-secondary);
     }
   }
 </style>
