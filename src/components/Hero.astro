@@ -24,13 +24,19 @@ const itemsJson = JSON.stringify(items);
     {initialItem.heroVideo ? (
       <div class="hero-bg-video-wrapper">
         <video 
-          id="hero-video"
+          id="hero-video-1"
           src={initialItem.heroVideo} 
-          class="hero-bg-video"
+          class="hero-bg-video active"
           autoplay 
           muted 
           playsinline
           poster={initialItem.thumbnail}
+        ></video>
+        <video 
+          id="hero-video-2"
+          class="hero-bg-video"
+          muted 
+          playsinline
         ></video>
       </div>
     ) : (
@@ -65,9 +71,10 @@ const itemsJson = JSON.stringify(items);
   <script is:inline define:vars={{ itemsJson }}>
     document.addEventListener('DOMContentLoaded', () => {
       const items = JSON.parse(itemsJson);
-      const videoEl = document.getElementById('hero-video');
+      let currentVideoEl = document.getElementById('hero-video-1');
+      let nextVideoEl = document.getElementById('hero-video-2');
       
-      if (!videoEl || items.length <= 1) return;
+      if (!currentVideoEl || !nextVideoEl || items.length <= 1) return;
 
       let currentIndex = 0;
 
@@ -75,7 +82,7 @@ const itemsJson = JSON.stringify(items);
       const btnPrimary = document.getElementById('hero-btn-primary');
       const contentEl = document.getElementById('hero-content');
 
-      videoEl.addEventListener('ended', () => {
+      const handleEnded = () => {
         currentIndex = (currentIndex + 1) % items.length;
         const nextItem = items[currentIndex];
 
@@ -97,12 +104,37 @@ const itemsJson = JSON.stringify(items);
 
           // Update video source and play
           if (nextItem.heroVideo) {
-            videoEl.src = nextItem.heroVideo;
-            if (nextItem.thumbnail) videoEl.poster = nextItem.thumbnail;
-            videoEl.play().catch(e => console.warn('Autoplay prevented:', e));
+            nextVideoEl.src = nextItem.heroVideo;
+            
+            const playAndSwap = () => {
+              nextVideoEl.oncanplay = null;
+              nextVideoEl.play().catch(e => console.warn('Autoplay prevented:', e));
+              
+              nextVideoEl.classList.add('active');
+              currentVideoEl.classList.remove('active');
+              
+              const temp = currentVideoEl;
+              currentVideoEl = nextVideoEl;
+              nextVideoEl = temp;
+
+              setTimeout(() => {
+                nextVideoEl.removeAttribute('src');
+                nextVideoEl.load();
+              }, 1000);
+            };
+
+            if (nextVideoEl.readyState >= 3) {
+              playAndSwap();
+            } else {
+              nextVideoEl.oncanplay = playAndSwap;
+              nextVideoEl.load();
+            }
           }
         }, 300);
-      });
+      };
+
+      currentVideoEl.addEventListener('ended', handleEnded);
+      nextVideoEl.addEventListener('ended', handleEnded);
     });
   </script>
 )}
@@ -140,13 +172,24 @@ const itemsJson = JSON.stringify(items);
     height: 100%;
     overflow: hidden;
     background-color: #000;
+    position: relative;
   }
   
   .hero-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: opacity 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 0;
+  }
+
+  .hero-bg-video.active {
+    opacity: 1;
+    z-index: 1;
   }
   
   .hero-overlay {
