@@ -3,6 +3,7 @@ interface Props {
   title?: string;
   description?: string;
   thumbnail?: string;
+  heroVideo?: string;
   scripture?: string;
   slug?: string;
 }
@@ -11,6 +12,7 @@ const {
   title = "Helping families grow closer to God",
   description = "Discover Scripture, stories, music, and creative Bible resources designed to make God's Word accessible, memorable, and meaningful.",
   thumbnail,
+  heroVideo,
   scripture,
   slug
 } = Astro.props;
@@ -19,7 +21,21 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
 ---
 
 <section class="hero section" style={`--hero-bg: ${thumbnail ? 'url(' + thumbnail + ')' : 'none'};`}>
-  <div class="hero-bg-image" style={`background-image: ${heroBg};`}></div>
+  {heroVideo ? (
+    <div class="hero-bg-video-wrapper">
+      <video 
+        src={heroVideo} 
+        class="hero-bg-video"
+        autoplay 
+        loop 
+        muted 
+        playsinline
+        poster={thumbnail}
+      ></video>
+    </div>
+  ) : (
+    <div class="hero-bg-image" style={`background-image: ${heroBg};`}></div>
+  )}
   <div class="hero-overlay"></div>
   
   <div class="container hero-container">
@@ -73,6 +89,23 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
     background-size: cover;
     background-position: center 30%; /* Better cropping for cinematic feel */
     z-index: 0;
+  }
+
+  .hero-bg-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    background-color: #000;
+  }
+  
+  .hero-bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   
   .hero-overlay {

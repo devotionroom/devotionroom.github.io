@@ -46,6 +46,7 @@ const themes = [
       title={heroSong.data.title}
       description={heroSong.data.description || "Experience God's Word through beautiful, memorable Scripture songs."}
       thumbnail={heroSong.data.thumbnail || (heroSong.data.youtubeId ? `https://img.youtube.com/vi/${heroSong.data.youtubeId}/maxresdefault.jpg` : undefined)}
+      heroVideo={heroSong.data.heroVideo}
       scripture={heroSong.data.bibleReference}
       slug={heroSong.slug}
     />

@@ -54,6 +54,7 @@ const songs = defineCollection({
     youtubeId: z.string().optional(),
     description: z.string().optional(),
     thumbnail: z.string().optional(),
+    heroVideo: z.string().optional(),
     featured: z.boolean().default(false),
     
     // Taxonomy
