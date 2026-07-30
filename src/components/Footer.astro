@@ -4,10 +4,9 @@ const year = new Date().getFullYear();
 <footer class="footer">
   <div class="container footer-container">
     <div class="footer-brand">
-      <div class="logo">
-        <span class="logo-icon">🌿</span>
-        <span class="logo-text">Devotion Room</span>
-      </div>
+      <a href="/" class="logo">
+        <img src="/images/devotion-room-logo.png" alt="Devotion Room" class="logo-image" />
+      </a>
       <p class="mission-text">
         Helping make God's Word accessible, memorable, and meaningful through creative teaching resources and Scripture-based content.
       </p>
@@ -64,15 +63,13 @@ const year = new Date().getFullYear();
   .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     margin-bottom: var(--spacing-md);
   }
   
-  .logo-text {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--color-text-primary);
+  .logo-image {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
   }
   
   .mission-text {

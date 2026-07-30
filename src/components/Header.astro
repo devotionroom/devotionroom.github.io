@@ -3,8 +3,7 @@
 <header class="header">
   <div class="container header-container">
     <a href="/" class="logo">
-      <span class="logo-icon">🌿</span>
-      <span class="logo-text">Devotion Room</span>
+      <img src="/images/devotion-room-logo.png" alt="Devotion Room" class="logo-image" />
     </a>
     
     <nav class="main-nav">
@@ -47,19 +46,12 @@
   .logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
   }
   
-  .logo-icon {
-    font-size: 1.5rem;
-  }
-  
-  .logo-text {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--color-text-primary);
-    letter-spacing: -0.02em;
+  .logo-image {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
   }
   
   .main-nav ul {
