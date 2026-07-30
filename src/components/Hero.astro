@@ -1,18 +1,52 @@
 ---
+interface Props {
+  title?: string;
+  description?: string;
+  thumbnail?: string;
+  scripture?: string;
+  slug?: string;
+}
+
+const { 
+  title = "Helping families grow closer to God",
+  description = "Discover Scripture, stories, music, and creative Bible resources designed to make God's Word accessible, memorable, and meaningful.",
+  thumbnail,
+  scripture,
+  slug
+} = Astro.props;
+
+const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%)';
 ---
-<section class="hero section">
+
+<section class="hero section" style={`--hero-bg: ${thumbnail ? 'url(' + thumbnail + ')' : 'none'};`}>
+  <div class="hero-bg-image" style={`background-image: ${heroBg};`}></div>
+  <div class="hero-overlay"></div>
+  
   <div class="container hero-container">
     <div class="hero-content animate-fade-in">
-      <div class="badge">Welcome to Devotion Room</div>
-      <h1 class="hero-title">
-        Helping families grow closer to God
-      </h1>
-      <p class="hero-subtitle">
-        Discover Scripture, stories, music, and creative Bible resources designed to make God's Word accessible, memorable, and meaningful.
-      </p>
+      {scripture ? (
+        <div class="badge">Scripture Song • {scripture}</div>
+      ) : (
+        <div class="badge">Welcome to Devotion Room</div>
+      )}
+      
+      <h1 class="hero-title">{title}</h1>
+      <p class="hero-subtitle">{description}</p>
+      
       <div class="hero-actions">
-        <a href="#resources" class="btn btn-primary">Explore Resources</a>
-        <a href="/devotionals" class="btn btn-secondary">Read Devotionals</a>
+        {slug ? (
+          <>
+            <a href={`/songs/${slug}`} class="btn btn-primary btn-large">
+              <span class="icon-play">▶</span> Watch Now
+            </a>
+            <a href="/songs" class="btn btn-secondary btn-large hero-btn-secondary">Browse Songs</a>
+          </>
+        ) : (
+          <>
+            <a href="#resources" class="btn btn-primary btn-large">Explore Resources</a>
+            <a href="/devotionals" class="btn btn-secondary btn-large hero-btn-secondary">Read Devotionals</a>
+          </>
+        )}
       </div>
     </div>
   </div>
@@ -21,32 +55,47 @@
 <style>
   .hero {
     position: relative;
-    padding-top: var(--spacing-xxl);
-    padding-bottom: var(--spacing-xl);
+    padding-top: calc(var(--spacing-xxl) * 1.5);
+    padding-bottom: calc(var(--spacing-xxl) * 1.5);
     overflow: hidden;
-    background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-bg-primary);
   }
   
-  /* Decorative background element */
-  .hero::before {
-    content: '';
+  .hero-bg-image {
     position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, var(--color-accent-secondary) 0%, transparent 70%);
-    opacity: 0.1;
-    border-radius: 50%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
     z-index: 0;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Soft gradient overlay for text readability */
+    background: linear-gradient(
+      to bottom, 
+      rgba(0, 0, 0, 0.4) 0%, 
+      rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: 1;
   }
   
   .hero-container {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     display: flex;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start; /* Left align for a more cinematic feel */
+    text-align: left;
   }
   
   .hero-content {
@@ -56,8 +105,9 @@
   .badge {
     display: inline-block;
     padding: 0.25rem 1rem;
-    background-color: color-mix(in srgb, var(--color-accent-primary) 15%, transparent);
-    color: var(--color-accent-primary);
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    color: #fff;
     border-radius: 20px;
     font-family: var(--font-heading);
     font-weight: 600;
@@ -65,33 +115,73 @@
     margin-bottom: var(--spacing-lg);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
   
   .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 700;
-    color: var(--color-text-primary);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: #fff;
     line-height: 1.1;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
     letter-spacing: -0.02em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
   
   .hero-subtitle {
-    font-size: clamp(1.125rem, 2vw, 1.25rem);
-    color: var(--color-text-secondary);
+    font-size: clamp(1.125rem, 2vw, 1.35rem);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: var(--spacing-xl);
     max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    line-height: 1.6;
   }
   
   .hero-actions {
     display: flex;
     gap: 1rem;
-    justify-content: center;
+    justify-content: flex-start;
+  }
+  
+  .btn-large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+  
+  .icon-play {
+    margin-right: 0.5rem;
+    font-size: 0.9em;
+  }
+  
+  .hero-btn-secondary {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff;
+  }
+  
+  .hero-btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: #fff;
   }
   
   @media (max-width: 640px) {
+    .hero {
+      min-height: 80vh;
+      align-items: flex-end;
+      padding-bottom: var(--spacing-xl);
+    }
+    
+    .hero-container {
+      text-align: center;
+      justify-content: center;
+    }
+    
+    .badge {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
     .hero-actions {
       flex-direction: column;
       width: 100%;
