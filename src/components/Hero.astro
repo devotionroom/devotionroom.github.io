@@ -1,72 +1,111 @@
 ---
-interface Props {
-  title?: string;
-  description?: string;
+interface HeroItem {
+  shortTitle?: string;
   thumbnail?: string;
   heroVideo?: string;
-  scripture?: string;
   slug?: string;
 }
 
-const { 
-  title = "Helping families grow closer to God",
-  description = "Discover Scripture, stories, music, and creative Bible resources designed to make God's Word accessible, memorable, and meaningful.",
-  thumbnail,
-  heroVideo,
-  scripture,
-  slug
-} = Astro.props;
+interface Props {
+  items?: HeroItem[];
+}
 
-const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%)';
+const { items = [] } = Astro.props;
+const initialItem = items[0] || {
+  shortTitle: "Helping families grow closer to God",
+};
+
+const hasMultiple = items.length > 1;
+const itemsJson = JSON.stringify(items);
 ---
 
-<section class="hero section" style={`--hero-bg: ${thumbnail ? 'url(' + thumbnail + ')' : 'none'};`}>
-  {heroVideo ? (
-    <div class="hero-bg-video-wrapper">
-      <video 
-        src={heroVideo} 
-        class="hero-bg-video"
-        autoplay 
-        loop 
-        muted 
-        playsinline
-        poster={thumbnail}
-      ></video>
-    </div>
-  ) : (
-    <div class="hero-bg-image" style={`background-image: ${heroBg};`}></div>
-  )}
+<section class="hero section">
+  <div id="hero-media-container" class="hero-media-container">
+    {initialItem.heroVideo ? (
+      <div class="hero-bg-video-wrapper">
+        <video 
+          id="hero-video"
+          src={initialItem.heroVideo} 
+          class="hero-bg-video"
+          autoplay 
+          muted 
+          playsinline
+          poster={initialItem.thumbnail}
+        ></video>
+      </div>
+    ) : (
+      <div 
+        id="hero-image"
+        class="hero-bg-image" 
+        style={`background-image: ${initialItem.thumbnail ? `url(${initialItem.thumbnail})` : 'linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%)'};`}
+      ></div>
+    )}
+  </div>
+  
   <div class="hero-overlay"></div>
   
   <div class="container hero-container">
-    <div class="hero-content animate-fade-in">
-      {scripture ? (
-        <div class="badge">Scripture Song • {scripture}</div>
-      ) : (
-        <div class="badge">Welcome to Devotion Room</div>
-      )}
+    <div class="hero-content animate-fade-in" id="hero-content">
+      <h1 id="hero-title" class="hero-title">{initialItem.shortTitle}</h1>
       
-      <h1 class="hero-title">{title}</h1>
-      <p class="hero-subtitle">{description}</p>
-      
-      <div class="hero-actions">
-        {slug ? (
-          <>
-            <a href={`/songs/${slug}`} class="btn btn-primary btn-large">
-              <span class="icon-play">▶</span> Watch Now
-            </a>
-            <a href="/songs" class="btn btn-secondary btn-large hero-btn-secondary">Browse Songs</a>
-          </>
+      <div class="hero-actions" id="hero-actions">
+        {initialItem.slug ? (
+          <a id="hero-btn-primary" href={`/songs/${initialItem.slug}`} class="btn btn-primary btn-large">
+            <span class="icon-play">▶</span> Watch Now
+          </a>
         ) : (
-          <>
-            <a href="#resources" class="btn btn-primary btn-large">Explore Resources</a>
-            <a href="/devotionals" class="btn btn-secondary btn-large hero-btn-secondary">Read Devotionals</a>
-          </>
+          <a id="hero-btn-primary" href="#resources" class="btn btn-primary btn-large">Explore Resources</a>
         )}
       </div>
     </div>
   </div>
 </section>
+
+{hasMultiple && (
+  <script is:inline define:vars={{ itemsJson }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = JSON.parse(itemsJson);
+      const videoEl = document.getElementById('hero-video');
+      
+      if (!videoEl || items.length <= 1) return;
+
+      let currentIndex = 0;
+
+      const titleEl = document.getElementById('hero-title');
+      const btnPrimary = document.getElementById('hero-btn-primary');
+      const contentEl = document.getElementById('hero-content');
+
+      videoEl.addEventListener('ended', () => {
+        currentIndex = (currentIndex + 1) % items.length;
+        const nextItem = items[currentIndex];
+
+        // Fade out text
+        contentEl.style.opacity = '0';
+        contentEl.style.transition = 'opacity 0.3s ease';
+
+        setTimeout(() => {
+          // Update text content
+          if (titleEl) titleEl.textContent = nextItem.shortTitle;
+          
+          if (btnPrimary && nextItem.slug) {
+            btnPrimary.href = `/songs/${nextItem.slug}`;
+            btnPrimary.innerHTML = '<span class="icon-play">▶</span> Watch Now';
+          }
+
+          // Fade back in
+          contentEl.style.opacity = '1';
+
+          // Update video source and play
+          if (nextItem.heroVideo) {
+            videoEl.src = nextItem.heroVideo;
+            if (nextItem.thumbnail) videoEl.poster = nextItem.thumbnail;
+            videoEl.play().catch(e => console.warn('Autoplay prevented:', e));
+          }
+        }, 300);
+      });
+    });
+  </script>
+)}
 
 <style>
   .hero {
@@ -80,24 +119,25 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
     max-height: 600px;
   }
   
-  .hero-bg-image {
+  .hero-media-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center 30%; /* Better cropping for cinematic feel */
     z-index: 0;
   }
 
-  .hero-bg-video-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .hero-bg-image {
     width: 100%;
     height: 100%;
-    z-index: 0;
+    background-size: cover;
+    background-position: center 30%;
+  }
+
+  .hero-bg-video-wrapper {
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     background-color: #000;
   }
@@ -106,6 +146,7 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: opacity 0.5s ease;
   }
   
   .hero-overlay {
@@ -114,12 +155,12 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
     left: 0;
     width: 100%;
     height: 100%;
-    /* Soft gradient overlay for text readability */
+    /* Subtle gradient overlay for text readability */
     background: linear-gradient(
       to right, 
-      rgba(0, 0, 0, 0.8) 0%,
-      rgba(0, 0, 0, 0.4) 50%,
-      rgba(0, 0, 0, 0.1) 100%
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      rgba(0, 0, 0, 0) 100%
     );
     z-index: 1;
   }
@@ -128,48 +169,24 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
     position: relative;
     z-index: 2;
     display: flex;
-    justify-content: flex-start; /* Left align for a more cinematic feel */
+    justify-content: flex-start;
     text-align: left;
     width: 100%;
   }
   
   .hero-content {
-    max-width: 700px; /* Slightly narrower to balance spacing */
-  }
-  
-  .badge {
-    display: inline-block;
-    padding: 0.25rem 1rem;
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(4px);
-    color: #fff;
-    border-radius: 20px;
-    font-family: var(--font-heading);
-    font-weight: 600;
-    font-size: 0.875rem;
-    margin-bottom: 1.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    max-width: 700px;
+    transition: opacity 0.3s ease;
   }
   
   .hero-title {
-    font-size: clamp(2.25rem, 5vw, 3.5rem); /* Slightly reduced for better balance */
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
     font-weight: 800;
     color: #fff;
     line-height: 1.15;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  }
-  
-  .hero-subtitle {
-    font-size: clamp(1.1rem, 2vw, 1.25rem);
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 2rem;
-    max-width: 600px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-    line-height: 1.5;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
   }
   
   .hero-actions {
@@ -188,29 +205,19 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
     font-size: 0.9em;
   }
   
-  .hero-btn-secondary {
-    background-color: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #fff;
-  }
-  
-  .hero-btn-secondary:hover {
-    background-color: rgba(255, 255, 255, 0.25);
-    border-color: #fff;
-  }
-  
   @media (max-width: 768px) {
     .hero {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-      max-height: none; /* Let content dictate height on mobile */
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+      max-height: none;
     }
     
     .hero-overlay {
+      /* Stronger gradient on mobile to ensure text readability against video */
       background: linear-gradient(
         to bottom, 
-        rgba(0, 0, 0, 0.4) 0%, 
+        rgba(0, 0, 0, 0.1) 0%, 
+        rgba(0, 0, 0, 0.6) 50%,
         rgba(0, 0, 0, 0.8) 100%
       );
     }
@@ -218,6 +225,13 @@ const heroBg = thumbnail ? `url(${thumbnail})` : 'linear-gradient(135deg, var(--
     .hero-container {
       text-align: left;
       justify-content: flex-start;
+      align-items: flex-end;
+      min-height: 50vh; /* Ensure video is prominent on mobile */
+    }
+    
+    .hero-title {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
     }
     
     .hero-actions {

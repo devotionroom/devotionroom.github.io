@@ -10,8 +10,24 @@ import FeaturedContentCard from '../components/FeaturedContentCard.astro';
 // Fetch Collections
 const allSongs = await getCollection('songs');
 const sortedSongs = allSongs.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const heroSong = sortedSongs[0];
-const featuredSongs = sortedSongs.slice(1, 4); // Next 3 songs
+
+// Featured songs for Hero (songs with heroVideo)
+const heroVideoSongs = sortedSongs.filter(song => song.data.heroVideo);
+const heroItems = heroVideoSongs.length > 0 
+  ? heroVideoSongs.map(song => ({
+      shortTitle: song.data.bibleReference ? `${song.data.bibleReference} Song` : song.data.title,
+      thumbnail: song.data.thumbnail || (song.data.youtubeId ? `https://img.youtube.com/vi/${song.data.youtubeId}/maxresdefault.jpg` : undefined),
+      heroVideo: song.data.heroVideo,
+      slug: song.slug
+    }))
+  : sortedSongs.slice(0, 1).map(song => ({
+      shortTitle: song.data.bibleReference ? `${song.data.bibleReference} Song` : song.data.title,
+      thumbnail: song.data.thumbnail || (song.data.youtubeId ? `https://img.youtube.com/vi/${song.data.youtubeId}/maxresdefault.jpg` : undefined),
+      heroVideo: song.data.heroVideo,
+      slug: song.slug
+    }));
+
+const featuredSongs = sortedSongs.slice(0, 3); // Latest 3 songs
 
 const allDevotionals = await getCollection('devotionals');
 const latestDevotional = allDevotionals.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0];
@@ -41,18 +57,7 @@ const themes = [
 
 <Layout title="Devotion Room | Scripture Songs & Bible Resources">
   <!-- 1. HERO SECTION -->
-  {heroSong ? (
-    <Hero 
-      title={heroSong.data.title}
-      description={heroSong.data.description || "Experience God's Word through beautiful, memorable Scripture songs."}
-      thumbnail={heroSong.data.thumbnail || (heroSong.data.youtubeId ? `https://img.youtube.com/vi/${heroSong.data.youtubeId}/maxresdefault.jpg` : undefined)}
-      heroVideo={heroSong.data.heroVideo}
-      scripture={heroSong.data.bibleReference}
-      slug={heroSong.slug}
-    />
-  ) : (
-    <Hero />
-  )}
+  <Hero items={heroItems} />
 
   <!-- 2. FEATURED SCRIPTURE SONGS -->
   {featuredSongs.length > 0 && (
