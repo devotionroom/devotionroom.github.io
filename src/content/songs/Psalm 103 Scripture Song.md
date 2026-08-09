@@ -27,7 +27,7 @@ mood:
   - Thankfulness
   - Reverence
 thumbnail: "https://i.ytimg.com/vi/62a1aVv1Qi8/maxresdefault.jpg"
-heroVideo: "/hero-videos/psalm-103-loop.mp4"
+heroVideo: "/hero-videos/hero-2.mp4"
 videoUrl: "https://youtu.be/62a1aVv1Qi8"
 copyright: "© 2026 Grace Adekeye"
 ---

@@ -27,7 +27,7 @@ mood:
   - Hope
   - Praise
 thumbnail: "https://i.ytimg.com/vi/AqRGDoZg4Rc/maxresdefault.jpg"
-heroVideo: "/hero-videos/isaiah-41vs10-loop.mp4"
+heroVideo: "/hero-videos/hero-3.mp4"
 videoUrl: "https://youtu.be/AqRGDoZg4Rc"
 copyright: "© 2026 Grace Adekeye"
 ---

@@ -26,7 +26,7 @@ mood:
   - Celebration
   - Praise
 thumbnail: "https://i.ytimg.com/vi/__uZkA57-vc/maxresdefault.jpg"
-heroVideo: "/hero-videos/psalm-100-loop.mp4"
+heroVideo: "/hero-videos/hero-1.mp4"
 videoUrl: "https://youtu.be/__uZkA57-vc"
 copyright: "© 2026 Grace Adekeye"
 ---
