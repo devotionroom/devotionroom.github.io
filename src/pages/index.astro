@@ -3,9 +3,8 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import SongCard from '../components/SongCard.astro';
-import BookCard from '../components/BookCard.astro';
-import ThemeChip from '../components/ThemeChip.astro';
-import FeaturedContentCard from '../components/FeaturedContentCard.astro';
+import ContentCard from '../components/ContentCard.astro';
+import Parser from 'rss-parser';
 
 // Fetch Collections
 const allSongs = await getCollection('songs');
@@ -27,150 +26,88 @@ const heroItems = heroVideoSongs.length > 0
       slug: song.slug
     }));
 
-const featuredSongs = sortedSongs.slice(0, 3); // Latest 3 songs
+const featuredSong = sortedSongs[0]; // ONE Latest Scripture Song
 
-const allDevotionals = await getCollection('devotionals');
-const latestDevotional = allDevotionals.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0];
+// Fetch Latest Podcast Episode
+let latestPodcast: any = null;
+try {
+  const parser = new Parser();
+  const feed = await parser.parseURL('https://anchor.fm/s/115d910a0/podcast/rss');
+  if (feed.items && feed.items.length > 0) {
+    latestPodcast = feed.items[0];
+  }
+} catch (error) {
+  console.error("Error fetching podcast RSS:", error);
+}
 
-const allLessons = await getCollection('lessons');
-const latestLesson = allLessons.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0];
-
-// Hardcoded Books and Themes for browsing
-const books = [
-  { title: "Psalms", href: "/songs?book=psalms" },
-  { title: "Isaiah", href: "/songs?book=isaiah" },
-  { title: "John", href: "/songs?book=john" },
-  { title: "Romans", href: "/songs?book=romans" }
-];
-
-const themes = [
-  { title: "Faith", href: "/songs?theme=faith" },
-  { title: "Hope", href: "/songs?theme=hope" },
-  { title: "Peace", href: "/songs?theme=peace" },
-  { title: "Joy", href: "/songs?theme=joy" },
-  { title: "Worship", href: "/songs?theme=worship" },
-  { title: "Encouragement", href: "/songs?theme=encouragement" },
-  { title: "Love", href: "/songs?theme=love" },
-  { title: "Praise", href: "/songs?theme=praise" }
-];
+// Fallback image for Browse card
+const browseImage = sortedSongs.length > 1 && (sortedSongs[1].data.thumbnail || (sortedSongs[1].data.youtubeId ? `https://img.youtube.com/vi/${sortedSongs[1].data.youtubeId}/hqdefault.jpg` : '')) || '/images/devotion-room-logo.png';
 ---
 
 <Layout title="Devotion Room | Scripture Songs & Bible Resources">
   <!-- 1. HERO SECTION -->
   <Hero items={heroItems} />
 
-  <!-- 2. FEATURED SCRIPTURE SONGS -->
-  {featuredSongs.length > 0 && (
-    <section class="section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Latest Scripture Songs</h2>
-          <a href="/songs" class="view-all-link">View All Songs →</a>
-        </div>
-        
-        <div class="song-grid">
-          {featuredSongs.map(song => (
-            <SongCard 
-              title={song.data.title}
-              slug={song.slug}
-              bibleReference={song.data.bibleReference}
-              youtubeId={song.data.youtubeId}
-              thumbnail={song.data.thumbnail}
-              category={song.data.category}
-              description={song.data.description}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- 3. BROWSE BY BOOK -->
-  <section class="section bg-secondary">
-    <div class="container">
-      <div class="text-center mb-xl">
-        <h2 class="section-title">Explore by Book</h2>
-        <p class="section-subtitle">Find Scripture songs based on books of the Bible.</p>
-      </div>
-      
-      <div class="book-grid">
-        {books.map(book => (
-          <BookCard title={book.title} href={book.href} />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. BROWSE BY THEME -->
-  <section class="section">
-    <div class="container">
-      <div class="text-center mb-xl">
-        <h2 class="section-title">Discover by Theme</h2>
-        <p class="section-subtitle">What do you need encouragement with today?</p>
-      </div>
-      
-      <div class="theme-chips-container">
-        {themes.map(theme => (
-          <ThemeChip title={theme.title} href={theme.href} />
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- 5 & 6. FEATURED CONTENT (DEVOTIONAL & LESSON) -->
-  {(latestDevotional || latestLesson) && (
-    <section class="section bg-secondary">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Latest Resources</h2>
-        </div>
-        
-        <div class="featured-content-grid">
-          {latestDevotional && (
-            <FeaturedContentCard 
-              title={latestDevotional.data.title}
-              href={`/devotionals/${latestDevotional.slug}`}
-              tag="Newest Devotional"
-              summary={latestDevotional.data.prayer || "Read our latest devotional and find encouragement for your daily walk with God."}
-              buttonText="Read Devotional"
-              icon="🕊️"
-              bgColor="surface"
-            />
-          )}
-          
-          {latestLesson && (
-            <FeaturedContentCard 
-              title={latestLesson.data.title}
-              href={`/lessons/${latestLesson.slug}`}
-              tag="Newest Lesson"
-              summary={latestLesson.data.objective || "Explore our latest teaching resource designed for families and Sunday school."}
-              buttonText="View Lesson"
-              icon="📚"
-              bgColor="surface"
-            />
-          )}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- 7. ABOUT DEVOTION ROOM -->
-  <section class="section about-section">
+  <!-- 2. WELCOME TO DEVOTION ROOM (SHORT VERSION) -->
+  <section class="section bg-secondary about-section">
     <div class="container text-center max-w-content">
       <h2 class="section-title">Welcome to Devotion Room</h2>
       <p class="about-text">
-        We believe God's Word transforms lives. Our mission is to make Scripture accessible, memorable, and meaningful through beautiful Scripture Songs, heartfelt worship, and creative Bible learning resources for family discipleship.
+        We believe God's Word transforms lives. Take a few minutes to pause, reflect, and draw near to God through Scripture Songs and reflections.
       </p>
-      <a href="/about" class="btn btn-secondary mt-lg">Learn More About Us</a>
     </div>
   </section>
 
-  <!-- 8. CALL TO ACTION -->
-  <section class="cta-section">
-    <div class="container text-center">
-      <h2 class="cta-title">Continue Worship</h2>
-      <p class="cta-subtitle">Explore our growing collection of Scripture Songs, devotionals, and Bible lessons.</p>
-      <a href="/songs" class="btn btn-primary btn-large cta-btn">Browse Scripture Songs</a>
+  <!-- 3. THREE-COLUMN ROW: Latest Song | Latest Podcast | Browse Songs -->
+  <section class="section">
+    <div class="container">
+      <div class="song-grid">
+        
+        {/* COLUMN 1 - LATEST SCRIPTURE SONG */}
+        <div class="grid-column">
+          <h3 class="column-title">New Scripture Song</h3>
+          {featuredSong && (
+            <SongCard 
+              title={featuredSong.data.title}
+              slug={featuredSong.slug}
+              bibleReference={featuredSong.data.bibleReference}
+              youtubeId={featuredSong.data.youtubeId}
+              thumbnail={featuredSong.data.thumbnail}
+              category={featuredSong.data.category}
+              description={featuredSong.data.description}
+            />
+          )}
+        </div>
+        
+        {/* COLUMN 2 - LATEST PODCAST */}
+        <div class="grid-column">
+          <h3 class="column-title">New Podcast</h3>
+          {latestPodcast && (
+            <ContentCard 
+              title={latestPodcast.title || "Latest Episode"}
+              href="/podcast"
+              thumbnail={latestPodcast.itunes?.image || browseImage}
+              category="Podcast Episode"
+              description={latestPodcast.contentSnippet ? latestPodcast.contentSnippet.substring(0, 100) + '...' : "Short reflections on Scripture, followed by Scripture songs."}
+              buttonText="Listen Now"
+            />
+          )}
+        </div>
+        
+        {/* COLUMN 3 - BROWSE SCRIPTURE SONGS */}
+        <div class="grid-column">
+          <h3 class="column-title">Browse Scripture Songs</h3>
+          <ContentCard 
+            title="Explore Collection"
+            href="/songs"
+            thumbnail={browseImage}
+            category="All Songs"
+            description="Explore our complete collection of Scripture Songs organized by book and theme."
+            buttonText="Browse Now"
+          />
+        </div>
+        
+      </div>
     </div>
   </section>
 </Layout>
@@ -179,14 +116,6 @@ const themes = [
   /* General Layout Utilities */
   .text-center {
     text-align: center;
-  }
-  
-  .mb-xl {
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .mt-lg {
-    margin-top: var(--spacing-lg);
   }
   
   .max-w-content {
@@ -199,129 +128,63 @@ const themes = [
     background-color: var(--color-bg-secondary);
   }
   
-  /* Section Typography */
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: var(--spacing-xl);
-    border-bottom: 2px solid var(--color-border);
-    padding-bottom: var(--spacing-sm);
+  /* Section Spacing Tightening */
+  .section {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+  }
+  
+  /* About Section */
+  .about-section {
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-lg);
   }
   
   .section-title {
     font-size: 2.25rem;
     font-weight: 700;
     color: var(--color-text-primary);
-    margin: 0;
+    margin: 0 0 var(--spacing-sm);
   }
-  
-  .section-subtitle {
-    font-size: 1.125rem;
+
+  .about-text {
+    font-size: 1.25rem;
+    line-height: 1.6;
     color: var(--color-text-secondary);
-    margin-top: 0.5rem;
-  }
-  
-  .view-all-link {
-    color: var(--color-accent-primary);
-    font-weight: 600;
-    text-decoration: none;
-    transition: color var(--transition-fast);
-  }
-  
-  .view-all-link:hover {
-    color: color-mix(in srgb, var(--color-accent-primary) 80%, black);
-    text-decoration: underline;
+    margin-top: var(--spacing-sm);
+    margin-bottom: 0;
   }
   
   /* Grids */
   .song-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--spacing-xl);
   }
   
-  .book-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--spacing-lg);
-  }
-  
-  .theme-chips-container {
+  .grid-column {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--spacing-md);
-    max-width: 900px;
-    margin: 0 auto;
+    flex-direction: column;
   }
   
-  .featured-content-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: var(--spacing-xl);
-  }
-  
-  /* About Section */
-  .about-section {
-    padding-top: calc(var(--spacing-xxl) * 1.5);
-    padding-bottom: calc(var(--spacing-xxl) * 1.5);
-  }
-  
-  .about-text {
+  .column-title {
     font-size: 1.25rem;
-    line-height: 1.8;
-    color: var(--color-text-secondary);
-    margin-top: var(--spacing-lg);
-  }
-  
-  /* CTA Section */
-  .cta-section {
-    background: linear-gradient(135deg, var(--color-accent-primary) 0%, color-mix(in srgb, var(--color-accent-primary) 70%, black) 100%);
-    color: white;
-    padding: calc(var(--spacing-xxl) * 1.5) 0;
-  }
-  
-  .cta-title {
-    font-size: 3rem;
-    font-weight: 800;
-    margin-bottom: var(--spacing-sm);
-    color: white;
-  }
-  
-  .cta-subtitle {
-    font-size: 1.25rem;
-    opacity: 0.9;
-    margin-bottom: var(--spacing-xl);
-  }
-  
-  .cta-btn {
-    background-color: white;
-    color: var(--color-accent-primary);
-    border: none;
     font-weight: 700;
-  }
-  
-  .cta-btn:hover {
-    background-color: var(--color-bg-secondary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
   
   /* Responsive Adjustments */
   @media (max-width: 768px) {
-    .section-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    
     .section-title {
       font-size: 1.75rem;
     }
     
-    .cta-title {
-      font-size: 2.25rem;
+    .column-title {
+      font-size: 1.125rem;
     }
   }
 </style>

@@ -1,0 +1,280 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Parser from 'rss-parser';
+
+let episodes: any[] = [];
+try {
+  const parser = new Parser();
+  const feed = await parser.parseURL('https://anchor.fm/s/115d910a0/podcast/rss');
+  episodes = feed.items || [];
+} catch (error) {
+  console.error("Error fetching podcast RSS:", error);
+}
+
+// Links provided by user
+const youtubeUrl = "https://www.youtube.com/playlist?list=PLFCuJGX8fChE";
+const appleUrl = "https://podcasts.apple.com/us/podcast/devotion-room/id6799597393";
+const spotifyUrl = "https://podcasters.spotify.com/pod/show/grace-adekeye-devotion-ro5";
+---
+
+<Layout title="Podcast | Devotion Room">
+  <div class="page-header">
+    <div class="container text-center max-w-content">
+      <h1 class="page-title">Devotion Room Podcast</h1>
+      <p class="page-subtitle mb-lg">
+        Short reflections on Scripture, followed by Scripture songs that bring God's Word to life.
+      </p>
+      
+      <div class="podcast-links">
+        <a href={youtubeUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary podcast-btn">
+          <span class="icon">▶️</span> Watch on YouTube
+        </a>
+        <a href={spotifyUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary podcast-btn">
+          <span class="icon">🎧</span> Listen on Spotify
+        </a>
+        <a href={appleUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary podcast-btn">
+          <span class="icon">🎙️</span> Listen on Apple Podcasts
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <section class="section content-section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Latest Episodes</h2>
+      </div>
+      
+      {episodes.length === 0 ? (
+        <div class="empty-state text-center">
+          <p>Episodes are coming soon! Check back later or subscribe on your favorite platform.</p>
+        </div>
+      ) : (
+        <div class="episode-list">
+          {episodes.map((episode) => (
+            <article class="episode-card">
+              {episode.itunes && episode.itunes.image && (
+                <div class="episode-image-wrapper">
+                  <img src={episode.itunes.image} alt={episode.title} class="episode-image" loading="lazy" />
+                </div>
+              )}
+              <div class="episode-content">
+                <div class="episode-meta">
+                  {episode.pubDate && (
+                    <time class="episode-date" datetime={new Date(episode.pubDate).toISOString()}>
+                      {new Date(episode.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </time>
+                  )}
+                  {episode.itunes && episode.itunes.duration && (
+                    <span class="episode-duration">• {episode.itunes.duration}</span>
+                  )}
+                  {episode.itunes && episode.itunes.episode && (
+                    <span class="episode-number">• Episode {episode.itunes.episode}</span>
+                  )}
+                </div>
+                <h3 class="episode-title">{episode.title}</h3>
+                
+                {/* 
+                  Using set:html for description because RSS descriptions are typically HTML.
+                  Since we control the Anchor feed, this is relatively safe, but in a production 
+                  environment with unknown feeds, this should be sanitized.
+                */}
+                <div class="episode-description" set:html={episode.content || episode.description} />
+                
+                {episode.enclosure && episode.enclosure.url && (
+                  <div class="episode-audio">
+                    <audio controls preload="none" class="audio-player">
+                      <source src={episode.enclosure.url} type={episode.enclosure.type || "audio/mpeg"} />
+                      Your browser does not support the audio element.
+                    </audio>
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-header {
+    background-color: var(--color-bg-secondary);
+    padding: var(--spacing-xl) 0 var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .content-section {
+    padding-top: var(--spacing-xl);
+  }
+
+  .page-title {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .page-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .mb-lg {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .max-w-content {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .podcast-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-xl);
+  }
+  
+  .podcast-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--color-surface);
+  }
+  
+  .podcast-btn:hover {
+    background-color: var(--color-bg-secondary);
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+  }
+  
+  .section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  
+  .episode-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .episode-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  .episode-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  @media (min-width: 768px) {
+    .episode-card {
+      flex-direction: row;
+    }
+  }
+  
+  .episode-image-wrapper {
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: var(--color-bg-secondary);
+  }
+  
+  @media (min-width: 768px) {
+    .episode-image-wrapper {
+      width: 250px;
+    }
+  }
+  
+  .episode-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .episode-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .episode-meta {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+  }
+  
+  .episode-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text-primary);
+  }
+  
+  .episode-description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  /* Reset some default RSS HTML margins in description */
+  .episode-description :global(p) {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .episode-description :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  
+  .episode-audio {
+    margin-top: auto;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+  }
+  
+  .audio-player {
+    width: 100%;
+    height: 40px;
+  }
+  
+  .empty-state {
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
+  }
+</style>
