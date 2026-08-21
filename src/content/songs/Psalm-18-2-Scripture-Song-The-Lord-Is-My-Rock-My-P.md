@@ -1,6 +1,6 @@
 ---
 title: "Psalm 18:2 - Scripture Song - The Lord Is My Rock, My Place of Safety"
-date: 2026-08-21
+date: 2026-08-08
 youtubeId: "-VvTkHNFmJQ"
 category: "Psalms"
 description: "A beautiful Scripture song titled: Psalm 18:2 - Scripture Song - The Lord Is My Rock, My Place of Safety"

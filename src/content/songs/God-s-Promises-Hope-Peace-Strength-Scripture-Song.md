@@ -1,6 +1,6 @@
 ---
 title: "God's Promises - Hope, Peace, & Strength - Scripture Song"
-date: 2026-08-21
+date: 2026-04-23
 youtubeId: "OIm3CQNqDmM"
 category: "General"
 description: "A beautiful Scripture song titled: God's Promises - Hope, Peace, & Strength - Scripture Song"

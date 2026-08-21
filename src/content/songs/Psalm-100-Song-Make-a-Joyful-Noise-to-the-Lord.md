@@ -1,6 +1,6 @@
 ---
 title: "Psalm 100 Song | Make a Joyful Noise to the Lord"
-date: 2026-08-21
+date: 2026-03-05
 youtubeId: "Wwx0DQSjcoQ"
 category: "Psalms"
 description: "A beautiful Scripture song titled: Psalm 100 Song | Make a Joyful Noise to the Lord"

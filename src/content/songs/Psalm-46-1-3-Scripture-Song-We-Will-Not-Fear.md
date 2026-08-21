@@ -1,6 +1,6 @@
 ---
 title: "Psalm 46:1-3 Scripture Song | We Will Not Fear"
-date: 2026-08-21
+date: 2026-07-10
 youtubeId: "DMWWeIAEYN0"
 category: "Psalms"
 description: "A beautiful Scripture song titled: Psalm 46:1-3 Scripture Song | We Will Not Fear"

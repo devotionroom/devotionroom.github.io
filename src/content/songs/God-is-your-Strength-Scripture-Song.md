@@ -1,6 +1,6 @@
 ---
 title: "God is your Strength Scripture Song"
-date: 2026-08-21
+date: 2026-03-26
 youtubeId: "BOGC0JhunQQ"
 category: "General"
 description: "A beautiful Scripture song titled: God is your Strength Scripture Song"

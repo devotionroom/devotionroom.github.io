@@ -5,7 +5,7 @@ bibleReference: "Isaiah 41:10"
 youtubeId: "AqRGDoZg4Rc"
 category: "Prophets"
 description: "A powerful word-for-word scripture song based on Isaiah 41:10 from the Berean Standard Bible. Be encouraged by God's promise to strengthen, help, and uphold you in every circumstance."
-featured: true
+featured: false
 topic:
   - Courage
   - Faith

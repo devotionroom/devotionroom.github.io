@@ -1,6 +1,6 @@
 ---
 title: "Scripture Song | When You Are Afraid"
-date: 2026-08-21
+date: 2026-03-12
 youtubeId: "VU0Q_8Ovf3w"
 category: "General"
 description: "A beautiful Scripture song titled: Scripture Song | When You Are Afraid"

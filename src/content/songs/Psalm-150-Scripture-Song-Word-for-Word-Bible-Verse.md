@@ -1,6 +1,6 @@
 ---
 title: "Psalm 150 Scripture Song - Word for Word Bible Verses"
-date: 2026-08-21
+date: 2026-04-09
 youtubeId: "efsAQ-wsycQ"
 category: "Psalms"
 description: "A beautiful Scripture song titled: Psalm 150 Scripture Song - Word for Word Bible Verses"

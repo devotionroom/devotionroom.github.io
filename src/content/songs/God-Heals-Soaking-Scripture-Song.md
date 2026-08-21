@@ -1,6 +1,6 @@
 ---
 title: "God Heals - Soaking Scripture Song"
-date: 2026-08-21
+date: 2026-04-16
 youtubeId: "J_Auv--ak28"
 category: "General"
 description: "A beautiful Scripture song titled: God Heals - Soaking Scripture Song"

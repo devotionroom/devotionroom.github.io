@@ -5,7 +5,7 @@ bibleReference: "Psalm 100"
 youtubeId: "__uZkA57-vc"
 category: "Psalms"
 description: "A joyful word-for-word scripture song based on Psalm 100 from the Berean Standard Bible. Sing along and worship with one of the Bible's great psalms of thanksgiving and praise."
-featured: true
+featured: false
 topic:
   - Praise
   - Thanksgiving

@@ -1,6 +1,6 @@
 ---
 title: "Zephaniah 3:17 Song | He Renews You By His Love (Scripture Music)"
-date: 2026-08-21
+date: 2026-06-18
 youtubeId: "0KhMBuEibtM"
 category: "Prophets"
 description: "A beautiful Scripture song titled: Zephaniah 3:17 Song | He Renews You By His Love (Scripture Music)"

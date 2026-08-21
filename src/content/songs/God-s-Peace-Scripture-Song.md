@@ -1,6 +1,6 @@
 ---
 title: "God's Peace - Scripture Song"
-date: 2026-08-21
+date: 2026-04-30
 youtubeId: "dXJyq0tHmvM"
 category: "General"
 description: "A beautiful Scripture song titled: God's Peace - Scripture Song"

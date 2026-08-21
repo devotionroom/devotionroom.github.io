@@ -1,6 +1,6 @@
 ---
 title: "Psalm 91 Song - A Scripture Song of Protection"
-date: 2026-08-21
+date: 2026-08-19
 bibleReference: "Psalm 91"
 youtubeId: "Hr6ymQSpBlM"
 category: "Psalms"

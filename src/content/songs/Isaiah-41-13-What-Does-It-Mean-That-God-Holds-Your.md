@@ -1,6 +1,6 @@
 ---
 title: "Isaiah 41:13 | What Does It Mean That God Holds Your Hand?"
-date: 2026-08-21
+date: 2026-08-14
 youtubeId: "6nYHwKRXqCQ"
 category: "Prophets"
 description: "A beautiful Scripture song titled: Isaiah 41:13 | What Does It Mean That God Holds Your Hand?"

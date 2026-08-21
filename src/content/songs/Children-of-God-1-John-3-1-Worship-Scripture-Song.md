@@ -1,10 +1,10 @@
 ---
 title: "Children of God - 1 John 3:1 - Worship Scripture Song"
-date: 2026-08-21
+date: 2026-01-22
 youtubeId: "QyJH3CQjWww"
 category: "New Testament"
 description: "A beautiful Scripture song titled: Children of God - 1 John 3:1 - Worship Scripture Song"
-featured: false
+featured: true
 topic:
   - Faith
   - Scripture

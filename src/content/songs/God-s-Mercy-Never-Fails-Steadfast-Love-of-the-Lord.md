@@ -1,6 +1,6 @@
 ---
 title: "God's Mercy Never Fails | Steadfast Love of the Lord | Scripture Song"
-date: 2026-08-21
+date: 2026-07-31
 youtubeId: "ifzYQyNEpMI"
 category: "General"
 description: "A beautiful Scripture song titled: God's Mercy Never Fails | Steadfast Love of the Lord | Scripture Song"

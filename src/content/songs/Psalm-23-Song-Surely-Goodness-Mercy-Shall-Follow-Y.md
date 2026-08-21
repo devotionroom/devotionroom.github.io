@@ -1,6 +1,6 @@
 ---
 title: "Psalm 23 Song - Surely Goodness & Mercy Shall Follow You"
-date: 2026-08-21
+date: 2026-06-27
 youtubeId: "Uc7RTkU2vxA"
 category: "Psalms"
 description: "A beautiful Scripture song titled: Psalm 23 Song - Surely Goodness & Mercy Shall Follow You"

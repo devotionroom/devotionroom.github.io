@@ -5,7 +5,7 @@ bibleReference: "Psalm 103:1–5"
 youtubeId: "62a1aVv1Qi8"
 category: "Psalms"
 description: "A joyful word-for-word scripture song based on Psalm 103:1–5 from the Berean Standard Bible. Join in worship as you remember God's forgiveness, healing, steadfast love, and abundant blessings."
-featured: true
+featured: false
 topic:
   - Worship
   - Thanksgiving
