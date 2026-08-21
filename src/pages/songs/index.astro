@@ -10,8 +10,8 @@ const songs = await getCollection('songs');
 const featuredSongs = songs.filter(song => song.data.featured);
 const latestSongs = songs
   .filter(song => !song.data.featured)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 6); // show latest 6 non-featured songs
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
 
 // Get unique categories for the buttons
 const categories = [...new Set(songs.map(song => song.data.category))].sort();
@@ -48,7 +48,7 @@ const categories = [...new Set(songs.map(song => song.data.category))].sort();
     <!-- Latest Releases Section -->
     {latestSongs.length > 0 && (
       <section class="content-section">
-        <h2 class="section-title">Latest Releases</h2>
+        <h2 class="section-title">All Songs</h2>
         <div class="song-grid">
           {latestSongs.map(song => (
             <SongCard 
