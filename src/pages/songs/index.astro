@@ -9,7 +9,6 @@ const songs = await getCollection('songs');
 // Split songs by featured and latest
 const featuredSongs = songs.filter(song => song.data.featured);
 const latestSongs = songs
-  .filter(song => !song.data.featured)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 
