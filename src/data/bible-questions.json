@@ -1,0 +1,1682 @@
+[
+  {
+    "id": "q1",
+    "question": "How many days did God take to create the world before resting?",
+    "correctAnswer": "Six",
+    "incorrectAnswers": [
+      "Five",
+      "Seven",
+      "Four"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "Genesis 2:1-2",
+    "explanation": "God created the heavens and the earth in six days and rested on the seventh day."
+  },
+  {
+    "id": "q2",
+    "question": "Who was the first man created by God?",
+    "correctAnswer": "Adam",
+    "incorrectAnswers": [
+      "Enoch",
+      "Noah",
+      "Abraham"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Easy",
+    "reference": "Genesis 2:7",
+    "explanation": "God formed Adam from the dust of the ground."
+  },
+  {
+    "id": "q3",
+    "question": "What was the name of the garden where Adam and Eve lived?",
+    "correctAnswer": "Eden",
+    "incorrectAnswers": [
+      "Gethsemane",
+      "Sinai",
+      "Carmel"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Easy",
+    "reference": "Genesis 2:8",
+    "explanation": "God planted a garden in Eden and placed the man there."
+  },
+  {
+    "id": "q4",
+    "question": "Who built the ark to survive the great flood?",
+    "correctAnswer": "Noah",
+    "incorrectAnswers": [
+      "Moses",
+      "Abraham",
+      "David"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "Genesis 6:13-14",
+    "explanation": "God instructed Noah to build an ark to save his family and the animals."
+  },
+  {
+    "id": "q5",
+    "question": "What was the sign of God's covenant with Noah after the flood?",
+    "correctAnswer": "A rainbow",
+    "incorrectAnswers": [
+      "A dove",
+      "A pillar of fire",
+      "A burning bush"
+    ],
+    "category": "General Bible Knowledge",
+    "difficulty": "Easy",
+    "reference": "Genesis 9:13",
+    "explanation": "God set His bow in the cloud as a sign of the covenant."
+  },
+  {
+    "id": "q6",
+    "question": "Who is known as the father of many nations?",
+    "correctAnswer": "Abraham",
+    "incorrectAnswers": [
+      "Jacob",
+      "Isaac",
+      "Moses"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Genesis 17:5",
+    "explanation": "God changed Abram's name to Abraham, meaning father of a multitude."
+  },
+  {
+    "id": "q7",
+    "question": "What were the names of Abraham and Sarah's son?",
+    "correctAnswer": "Isaac",
+    "incorrectAnswers": [
+      "Ishmael",
+      "Jacob",
+      "Esau"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Genesis 21:3",
+    "explanation": "Abraham named his son, whom Sarah bore to him, Isaac."
+  },
+  {
+    "id": "q8",
+    "question": "Who was sold into slavery in Egypt by his brothers?",
+    "correctAnswer": "Joseph",
+    "incorrectAnswers": [
+      "Benjamin",
+      "Judah",
+      "Reuben"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "Genesis 37:28",
+    "explanation": "Joseph's brothers sold him to Midianite traders, who took him to Egypt."
+  },
+  {
+    "id": "q9",
+    "question": "What did God speak to Moses from in the desert?",
+    "correctAnswer": "A burning bush",
+    "incorrectAnswers": [
+      "A cloud",
+      "A whirlwind",
+      "A mountain cleft"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "Exodus 3:4",
+    "explanation": "God called to Moses from the midst of the bush that was burning but not consumed."
+  },
+  {
+    "id": "q10",
+    "question": "How many plagues did God send upon Egypt?",
+    "correctAnswer": "Ten",
+    "incorrectAnswers": [
+      "Seven",
+      "Twelve",
+      "Forty"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Medium",
+    "reference": "Exodus 7-12",
+    "explanation": "God sent ten plagues upon Egypt before Pharaoh let the Israelites go."
+  },
+  {
+    "id": "q11",
+    "question": "Finish the verse: 'In the beginning, God created...'",
+    "correctAnswer": "the heavens and the earth.",
+    "incorrectAnswers": [
+      "the sun and the moon.",
+      "man in His image.",
+      "the light and the darkness."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Easy",
+    "reference": "Genesis 1:1",
+    "explanation": "Genesis 1:1 states: 'In the beginning, God created the heavens and the earth.'"
+  },
+  {
+    "id": "q12",
+    "question": "Finish the verse: 'The Lord is my shepherd; I shall not...'",
+    "correctAnswer": "want.",
+    "incorrectAnswers": [
+      "fear.",
+      "faint.",
+      "fall."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Easy",
+    "reference": "Psalm 23:1",
+    "explanation": "Psalm 23:1 famously says, 'The Lord is my shepherd; I shall not want.'"
+  },
+  {
+    "id": "q13",
+    "question": "According to Proverbs 3:5, we are to 'Trust in the Lord with all your...'",
+    "correctAnswer": "heart",
+    "incorrectAnswers": [
+      "mind",
+      "soul",
+      "strength"
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Easy",
+    "reference": "Proverbs 3:5",
+    "explanation": "'Trust in the Lord with all your heart, and do not lean on your own understanding.'"
+  },
+  {
+    "id": "q14",
+    "question": "Finish the verse: 'Your word is a lamp to my feet and a light to my...'",
+    "correctAnswer": "path.",
+    "incorrectAnswers": [
+      "way.",
+      "soul.",
+      "heart."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Psalm 119:105",
+    "explanation": "Psalm 119:105 says, 'Your word is a lamp to my feet and a light to my path.'"
+  },
+  {
+    "id": "q15",
+    "question": "According to John 3:16, God so loved the world that He gave what?",
+    "correctAnswer": "His only Son",
+    "incorrectAnswers": [
+      "His Holy Spirit",
+      "The Law",
+      "Eternal life"
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Easy",
+    "reference": "John 3:16",
+    "explanation": "'For God so loved the world, that he gave his only Son...'"
+  },
+  {
+    "id": "q16",
+    "question": "Finish the verse (Philippians 4:13): 'I can do all things through him who...'",
+    "correctAnswer": "strengthens me.",
+    "incorrectAnswers": [
+      "saves me.",
+      "loves me.",
+      "guides me."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Philippians 4:13",
+    "explanation": "'I can do all things through him who strengthens me.'"
+  },
+  {
+    "id": "q17",
+    "question": "Romans 8:28 says that in all things God works for the good of those who...",
+    "correctAnswer": "love Him.",
+    "incorrectAnswers": [
+      "obey Him.",
+      "seek Him.",
+      "serve Him."
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Medium",
+    "reference": "Romans 8:28",
+    "explanation": "'And we know that for those who love God all things work together for good...'"
+  },
+  {
+    "id": "q18",
+    "question": "Finish the verse (Galatians 5:22): 'But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness,...'",
+    "correctAnswer": "faithfulness",
+    "incorrectAnswers": [
+      "righteousness",
+      "holiness",
+      "truth"
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Galatians 5:22",
+    "explanation": "'But the fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness...'"
+  },
+  {
+    "id": "q19",
+    "question": "According to 1 Thessalonians 5:16-18, we should 'Rejoice always, pray without ceasing, give thanks in...'",
+    "correctAnswer": "all circumstances",
+    "incorrectAnswers": [
+      "times of joy",
+      "the morning",
+      "the congregation"
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Hard",
+    "reference": "1 Thessalonians 5:16-18",
+    "explanation": "'Rejoice always, pray without ceasing, give thanks in all circumstances...'"
+  },
+  {
+    "id": "q20",
+    "question": "Finish the verse (Ephesians 2:8): 'For by grace you have been saved through...'",
+    "correctAnswer": "faith",
+    "incorrectAnswers": [
+      "works",
+      "love",
+      "baptism"
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Ephesians 2:8",
+    "explanation": "'For by grace you have been saved through faith...'"
+  },
+  {
+    "id": "q21",
+    "question": "In what city was Jesus born?",
+    "correctAnswer": "Bethlehem",
+    "incorrectAnswers": [
+      "Nazareth",
+      "Jerusalem",
+      "Capernaum"
+    ],
+    "category": "New Testament",
+    "difficulty": "Easy",
+    "reference": "Matthew 2:1",
+    "explanation": "Jesus was born in Bethlehem of Judea in the days of Herod the king."
+  },
+  {
+    "id": "q22",
+    "question": "Who baptized Jesus?",
+    "correctAnswer": "John the Baptist",
+    "incorrectAnswers": [
+      "Peter",
+      "James",
+      "Matthew"
+    ],
+    "category": "Jesus",
+    "difficulty": "Easy",
+    "reference": "Matthew 3:13",
+    "explanation": "Jesus came from Galilee to the Jordan to John, to be baptized by him."
+  },
+  {
+    "id": "q23",
+    "question": "What was Jesus' first recorded miracle?",
+    "correctAnswer": "Turning water into wine",
+    "incorrectAnswers": [
+      "Healing a blind man",
+      "Walking on water",
+      "Feeding the 5,000"
+    ],
+    "category": "Jesus",
+    "difficulty": "Medium",
+    "reference": "John 2:1-11",
+    "explanation": "Jesus turned water into wine at a wedding at Cana in Galilee."
+  },
+  {
+    "id": "q24",
+    "question": "How many apostles did Jesus choose?",
+    "correctAnswer": "Twelve",
+    "incorrectAnswers": [
+      "Ten",
+      "Seven",
+      "Fourteen"
+    ],
+    "category": "New Testament",
+    "difficulty": "Easy",
+    "reference": "Luke 6:13",
+    "explanation": "Jesus called his disciples and chose from them twelve, whom he named apostles."
+  },
+  {
+    "id": "q25",
+    "question": "Which apostle betrayed Jesus?",
+    "correctAnswer": "Judas Iscariot",
+    "incorrectAnswers": [
+      "Peter",
+      "Thomas",
+      "John"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Easy",
+    "reference": "Matthew 26:14-16",
+    "explanation": "Judas Iscariot went to the chief priests and agreed to betray Jesus."
+  },
+  {
+    "id": "q26",
+    "question": "Which disciple denied Jesus three times?",
+    "correctAnswer": "Peter",
+    "incorrectAnswers": [
+      "John",
+      "James",
+      "Andrew"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Easy",
+    "reference": "Luke 22:34",
+    "explanation": "Jesus told Peter that the rooster would not crow until he had denied Him three times."
+  },
+  {
+    "id": "q27",
+    "question": "Who was the Roman governor who sentenced Jesus to be crucified?",
+    "correctAnswer": "Pontius Pilate",
+    "incorrectAnswers": [
+      "Herod Antipas",
+      "Caesar Augustus",
+      "Felix"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Matthew 27:26",
+    "explanation": "Pilate scourged Jesus and delivered Him to be crucified."
+  },
+  {
+    "id": "q28",
+    "question": "What happened on the third day after Jesus' crucifixion?",
+    "correctAnswer": "He rose from the dead",
+    "incorrectAnswers": [
+      "He ascended into heaven",
+      "The temple was destroyed",
+      "The Holy Spirit descended"
+    ],
+    "category": "Jesus",
+    "difficulty": "Easy",
+    "reference": "Luke 24:6-7",
+    "explanation": "Jesus was raised from the dead on the third day, just as He foretold."
+  },
+  {
+    "id": "q29",
+    "question": "Which Pharisee came to visit Jesus at night?",
+    "correctAnswer": "Nicodemus",
+    "incorrectAnswers": [
+      "Gamaliel",
+      "Joseph of Arimathea",
+      "Caiaphas"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "John 3:1-2",
+    "explanation": "Nicodemus, a ruler of the Jews, came to Jesus by night."
+  },
+  {
+    "id": "q30",
+    "question": "Who wrote the majority of the New Testament epistles (letters)?",
+    "correctAnswer": "Paul",
+    "incorrectAnswers": [
+      "Peter",
+      "John",
+      "Luke"
+    ],
+    "category": "New Testament",
+    "difficulty": "Easy",
+    "reference": "Romans 1:1",
+    "explanation": "The Apostle Paul wrote at least 13 letters in the New Testament."
+  },
+  {
+    "id": "q31",
+    "question": "What is the first book of the Bible?",
+    "correctAnswer": "Genesis",
+    "incorrectAnswers": [
+      "Exodus",
+      "Psalms",
+      "Matthew"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "Genesis 1:1",
+    "explanation": "Genesis is the book of beginnings and the first book of the Old Testament."
+  },
+  {
+    "id": "q32",
+    "question": "What is the last book of the Bible?",
+    "correctAnswer": "Revelation",
+    "incorrectAnswers": [
+      "Malachi",
+      "Jude",
+      "Acts"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "Revelation 22:21",
+    "explanation": "Revelation, written by John, is the final book of the New Testament."
+  },
+  {
+    "id": "q33",
+    "question": "Which book of the Bible consists primarily of songs and prayers?",
+    "correctAnswer": "Psalms",
+    "incorrectAnswers": [
+      "Proverbs",
+      "Lamentations",
+      "Song of Solomon"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "Psalms",
+    "explanation": "The book of Psalms is a collection of 150 songs, prayers, and poems."
+  },
+  {
+    "id": "q34",
+    "question": "Which book is known for containing wisdom and sayings primarily written by Solomon?",
+    "correctAnswer": "Proverbs",
+    "incorrectAnswers": [
+      "Ecclesiastes",
+      "Job",
+      "Hebrews"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "Proverbs 1:1",
+    "explanation": "Proverbs begins: 'The proverbs of Solomon, son of David, king of Israel.'"
+  },
+  {
+    "id": "q35",
+    "question": "Which of these is NOT one of the four Gospels?",
+    "correctAnswer": "Acts",
+    "incorrectAnswers": [
+      "Matthew",
+      "Mark",
+      "Luke"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "New Testament",
+    "explanation": "The four Gospels are Matthew, Mark, Luke, and John. Acts is a historical book."
+  },
+  {
+    "id": "q36",
+    "question": "What is the shortest book in the New Testament (by word count)?",
+    "correctAnswer": "3 John",
+    "incorrectAnswers": [
+      "Philemon",
+      "Jude",
+      "2 John"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Hard",
+    "reference": "3 John",
+    "explanation": "3 John is the shortest book in the Bible by original Greek word count."
+  },
+  {
+    "id": "q37",
+    "question": "Which Old Testament book tells the story of the Israelites leaving Egypt?",
+    "correctAnswer": "Exodus",
+    "incorrectAnswers": [
+      "Genesis",
+      "Numbers",
+      "Leviticus"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "Exodus 12",
+    "explanation": "Exodus recounts the departure of the Israelites from slavery in Egypt."
+  },
+  {
+    "id": "q38",
+    "question": "Which book tells the story of a prophet swallowed by a great fish?",
+    "correctAnswer": "Jonah",
+    "incorrectAnswers": [
+      "Amos",
+      "Micah",
+      "Joel"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "Jonah 1:17",
+    "explanation": "The book of Jonah describes how God appointed a great fish to swallow Jonah."
+  },
+  {
+    "id": "q39",
+    "question": "Which New Testament book details the history of the early church?",
+    "correctAnswer": "Acts",
+    "incorrectAnswers": [
+      "Romans",
+      "Hebrews",
+      "Revelation"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "Acts 1:1",
+    "explanation": "The Acts of the Apostles records the beginnings and spread of the early church."
+  },
+  {
+    "id": "q40",
+    "question": "In which book do we find the Ten Commandments originally given?",
+    "correctAnswer": "Exodus",
+    "incorrectAnswers": [
+      "Leviticus",
+      "Deuteronomy",
+      "Numbers"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "Exodus 20",
+    "explanation": "The Ten Commandments are first given in Exodus 20 (and later restated in Deuteronomy 5)."
+  },
+  {
+    "id": "q41",
+    "question": "Who Am I? I was a shepherd boy who defeated a giant and later became king of Israel.",
+    "correctAnswer": "David",
+    "incorrectAnswers": [
+      "Saul",
+      "Solomon",
+      "Samuel"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Easy",
+    "reference": "1 Samuel 17",
+    "explanation": "David defeated Goliath and eventually became Israel's second king."
+  },
+  {
+    "id": "q42",
+    "question": "Who Am I? I led the Israelites through the parted Red Sea.",
+    "correctAnswer": "Moses",
+    "incorrectAnswers": [
+      "Joshua",
+      "Aaron",
+      "Caleb"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Easy",
+    "reference": "Exodus 14",
+    "explanation": "Moses stretched out his hand over the sea, and God parted the waters."
+  },
+  {
+    "id": "q43",
+    "question": "Who Am I? I am known for my incredible strength and my long hair.",
+    "correctAnswer": "Samson",
+    "incorrectAnswers": [
+      "Goliath",
+      "Elijah",
+      "Gideon"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Medium",
+    "reference": "Judges 16",
+    "explanation": "Samson's strength was linked to his Nazirite vow, which included never cutting his hair."
+  },
+  {
+    "id": "q44",
+    "question": "Who Am I? I was swallowed by a great fish when I ran away from God's command.",
+    "correctAnswer": "Jonah",
+    "incorrectAnswers": [
+      "Job",
+      "Jeremiah",
+      "Ezekiel"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Easy",
+    "reference": "Jonah 1",
+    "explanation": "Jonah tried to flee to Tarshish instead of preaching in Nineveh."
+  },
+  {
+    "id": "q45",
+    "question": "Who Am I? I am the cousin of Jesus and I baptized Him in the Jordan River.",
+    "correctAnswer": "John the Baptist",
+    "incorrectAnswers": [
+      "James",
+      "Peter",
+      "Luke"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Easy",
+    "reference": "Luke 3",
+    "explanation": "John the Baptist prepared the way for Jesus and baptized Him."
+  },
+  {
+    "id": "q46",
+    "question": "Who Am I? I was cast into a den of lions for praying to God.",
+    "correctAnswer": "Daniel",
+    "incorrectAnswers": [
+      "Joseph",
+      "David",
+      "Elijah"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Easy",
+    "reference": "Daniel 6",
+    "explanation": "Daniel was thrown to the lions, but God sent an angel to shut their mouths."
+  },
+  {
+    "id": "q47",
+    "question": "Who Am I? I asked God for wisdom to lead His people and built the first temple in Jerusalem.",
+    "correctAnswer": "Solomon",
+    "incorrectAnswers": [
+      "David",
+      "Hezekiah",
+      "Josiah"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Medium",
+    "reference": "1 Kings 3",
+    "explanation": "King Solomon asked for an understanding mind and built the temple."
+  },
+  {
+    "id": "q48",
+    "question": "Who Am I? I was the first martyr of the Christian church, stoned for my faith.",
+    "correctAnswer": "Stephen",
+    "incorrectAnswers": [
+      "James",
+      "Paul",
+      "Peter"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Hard",
+    "reference": "Acts 7",
+    "explanation": "Stephen was stoned to death while testifying about Jesus."
+  },
+  {
+    "id": "q49",
+    "question": "Who Am I? I was a tax collector who climbed a sycamore tree to see Jesus.",
+    "correctAnswer": "Zacchaeus",
+    "incorrectAnswers": [
+      "Matthew",
+      "Levi",
+      "Nicodemus"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Medium",
+    "reference": "Luke 19",
+    "explanation": "Zacchaeus was short, so he climbed a tree to see Jesus over the crowd."
+  },
+  {
+    "id": "q50",
+    "question": "Who Am I? I was Ruth's mother-in-law.",
+    "correctAnswer": "Naomi",
+    "incorrectAnswers": [
+      "Orpah",
+      "Hannah",
+      "Elizabeth"
+    ],
+    "category": "Who Am I?",
+    "difficulty": "Medium",
+    "reference": "Ruth 1",
+    "explanation": "Naomi was the mother-in-law of Ruth and Orpah."
+  },
+  {
+    "id": "q51",
+    "question": "What was the name of Moses' brother?",
+    "correctAnswer": "Aaron",
+    "incorrectAnswers": [
+      "Miriam",
+      "Joshua",
+      "Caleb"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Easy",
+    "reference": "Exodus 4:14",
+    "explanation": "This fact is recorded in Exodus 4:14."
+  },
+  {
+    "id": "q52",
+    "question": "Who was the oldest man mentioned in the Bible?",
+    "correctAnswer": "Methuselah",
+    "incorrectAnswers": [
+      "Noah",
+      "Adam",
+      "Enoch"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Genesis 5:27",
+    "explanation": "This fact is recorded in Genesis 5:27."
+  },
+  {
+    "id": "q53",
+    "question": "What did David use to defeat Goliath?",
+    "correctAnswer": "A sling and a stone",
+    "incorrectAnswers": [
+      "A sword",
+      "A spear",
+      "A bow and arrow"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "1 Samuel 17:50",
+    "explanation": "This fact is recorded in 1 Samuel 17:50."
+  },
+  {
+    "id": "q54",
+    "question": "How many days and nights did it rain during the flood?",
+    "correctAnswer": "40",
+    "incorrectAnswers": [
+      "7",
+      "12",
+      "100"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "Genesis 7:12",
+    "explanation": "This fact is recorded in Genesis 7:12."
+  },
+  {
+    "id": "q55",
+    "question": "Who interpreted Pharaoh's dreams?",
+    "correctAnswer": "Joseph",
+    "incorrectAnswers": [
+      "Moses",
+      "Daniel",
+      "Jacob"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Medium",
+    "reference": "Genesis 41",
+    "explanation": "This fact is recorded in Genesis 41."
+  },
+  {
+    "id": "q56",
+    "question": "What food did God provide for the Israelites in the wilderness?",
+    "correctAnswer": "Manna",
+    "incorrectAnswers": [
+      "Bread and wine",
+      "Locusts and honey",
+      "Figs and pomegranates"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "Exodus 16:15",
+    "explanation": "This fact is recorded in Exodus 16:15."
+  },
+  {
+    "id": "q57",
+    "question": "What sea did the Israelites cross on dry ground?",
+    "correctAnswer": "The Red Sea",
+    "incorrectAnswers": [
+      "The Dead Sea",
+      "The Sea of Galilee",
+      "The Mediterranean Sea"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Easy",
+    "reference": "Exodus 14:21-22",
+    "explanation": "This fact is recorded in Exodus 14:21-22."
+  },
+  {
+    "id": "q58",
+    "question": "What was the name of the giant Philistine warrior David fought?",
+    "correctAnswer": "Goliath",
+    "incorrectAnswers": [
+      "Samson",
+      "Agag",
+      "Sisera"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Easy",
+    "reference": "1 Samuel 17:4",
+    "explanation": "This fact is recorded in 1 Samuel 17:4."
+  },
+  {
+    "id": "q59",
+    "question": "What instrument did David play to soothe King Saul?",
+    "correctAnswer": "A lyre (harp)",
+    "incorrectAnswers": [
+      "A flute",
+      "A trumpet",
+      "A tambourine"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Medium",
+    "reference": "1 Samuel 16:23",
+    "explanation": "This fact is recorded in 1 Samuel 16:23."
+  },
+  {
+    "id": "q60",
+    "question": "Who was thrown into a fiery furnace for refusing to bow to an idol?",
+    "correctAnswer": "Shadrach, Meshach, and Abednego",
+    "incorrectAnswers": [
+      "Daniel, Hananiah, and Mishael",
+      "Peter, James, and John",
+      "Elijah and Elisha"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Medium",
+    "reference": "Daniel 3",
+    "explanation": "This fact is recorded in Daniel 3."
+  },
+  {
+    "id": "q61",
+    "question": "Who was the mother of Jesus?",
+    "correctAnswer": "Mary",
+    "incorrectAnswers": [
+      "Elizabeth",
+      "Martha",
+      "Mary Magdalene"
+    ],
+    "category": "New Testament",
+    "difficulty": "Easy",
+    "reference": "Luke 1:30-31",
+    "explanation": "This fact is recorded in Luke 1:30-31."
+  },
+  {
+    "id": "q62",
+    "question": "What trade did Jesus learn?",
+    "correctAnswer": "Carpentry",
+    "incorrectAnswers": [
+      "Fishing",
+      "Tentmaking",
+      "Farming"
+    ],
+    "category": "Jesus",
+    "difficulty": "Medium",
+    "reference": "Mark 6:3",
+    "explanation": "This fact is recorded in Mark 6:3."
+  },
+  {
+    "id": "q63",
+    "question": "Where did Jesus walk on water?",
+    "correctAnswer": "The Sea of Galilee",
+    "incorrectAnswers": [
+      "The Dead Sea",
+      "The Red Sea",
+      "The Jordan River"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Medium",
+    "reference": "Matthew 14:25",
+    "explanation": "This fact is recorded in Matthew 14:25."
+  },
+  {
+    "id": "q64",
+    "question": "Who was the blind man Jesus healed in Jericho?",
+    "correctAnswer": "Bartimaeus",
+    "incorrectAnswers": [
+      "Lazarus",
+      "Nicodemus",
+      "Zacchaeus"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Hard",
+    "reference": "Mark 10:46",
+    "explanation": "This fact is recorded in Mark 10:46."
+  },
+  {
+    "id": "q65",
+    "question": "What did Jesus multiply to feed the 5,000?",
+    "correctAnswer": "Five loaves and two fish",
+    "incorrectAnswers": [
+      "Seven loaves and a few small fish",
+      "Bread and wine",
+      "Manna and quail"
+    ],
+    "category": "Jesus",
+    "difficulty": "Easy",
+    "reference": "Matthew 14:17",
+    "explanation": "This fact is recorded in Matthew 14:17."
+  },
+  {
+    "id": "q66",
+    "question": "Which disciple was a tax collector before following Jesus?",
+    "correctAnswer": "Matthew",
+    "incorrectAnswers": [
+      "Luke",
+      "Peter",
+      "Andrew"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Matthew 9:9",
+    "explanation": "This fact is recorded in Matthew 9:9."
+  },
+  {
+    "id": "q67",
+    "question": "Who was the high priest who presided over Jesus' trial?",
+    "correctAnswer": "Caiaphas",
+    "incorrectAnswers": [
+      "Annas",
+      "Pilate",
+      "Herod"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Hard",
+    "reference": "Matthew 26:57",
+    "explanation": "This fact is recorded in Matthew 26:57."
+  },
+  {
+    "id": "q68",
+    "question": "Where was Jesus crucified?",
+    "correctAnswer": "Golgotha (The Place of a Skull)",
+    "incorrectAnswers": [
+      "Mount Sinai",
+      "Mount of Olives",
+      "Gethsemane"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Medium",
+    "reference": "John 19:17",
+    "explanation": "This fact is recorded in John 19:17."
+  },
+  {
+    "id": "q69",
+    "question": "Who asked for the body of Jesus and placed it in his own tomb?",
+    "correctAnswer": "Joseph of Arimathea",
+    "incorrectAnswers": [
+      "Nicodemus",
+      "John",
+      "Peter"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Matthew 27:57-60",
+    "explanation": "This fact is recorded in Matthew 27:57-60."
+  },
+  {
+    "id": "q70",
+    "question": "To whom did Jesus say, 'I am the way, and the truth, and the life'?",
+    "correctAnswer": "Thomas",
+    "incorrectAnswers": [
+      "Peter",
+      "John",
+      "Philip"
+    ],
+    "category": "Jesus",
+    "difficulty": "Hard",
+    "reference": "John 14:6",
+    "explanation": "This fact is recorded in John 14:6."
+  },
+  {
+    "id": "q71",
+    "question": "Which book comes after the Gospels in the New Testament?",
+    "correctAnswer": "Acts",
+    "incorrectAnswers": [
+      "Romans",
+      "Hebrews",
+      "Revelation"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "New Testament",
+    "explanation": "This fact is recorded in New Testament."
+  },
+  {
+    "id": "q72",
+    "question": "How many books are in the New Testament?",
+    "correctAnswer": "27",
+    "incorrectAnswers": [
+      "39",
+      "66",
+      "12"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "New Testament",
+    "explanation": "This fact is recorded in New Testament."
+  },
+  {
+    "id": "q73",
+    "question": "How many books are in the Old Testament?",
+    "correctAnswer": "39",
+    "incorrectAnswers": [
+      "27",
+      "66",
+      "50"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "Old Testament",
+    "explanation": "This fact is recorded in Old Testament."
+  },
+  {
+    "id": "q74",
+    "question": "What are the first five books of the Old Testament called?",
+    "correctAnswer": "The Pentateuch (or Torah)",
+    "incorrectAnswers": [
+      "The Gospels",
+      "The Epistles",
+      "The Prophets"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "Old Testament",
+    "explanation": "This fact is recorded in Old Testament."
+  },
+  {
+    "id": "q75",
+    "question": "Which Gospel was written by a physician?",
+    "correctAnswer": "Luke",
+    "incorrectAnswers": [
+      "Matthew",
+      "Mark",
+      "John"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Hard",
+    "reference": "Colossians 4:14",
+    "explanation": "This fact is recorded in Colossians 4:14."
+  },
+  {
+    "id": "q76",
+    "question": "What book contains the story of a man who lost everything but remained faithful to God?",
+    "correctAnswer": "Job",
+    "incorrectAnswers": [
+      "Ecclesiastes",
+      "Lamentations",
+      "Proverbs"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "Job",
+    "explanation": "This fact is recorded in Job."
+  },
+  {
+    "id": "q77",
+    "question": "Which book features the phrase 'Vanity of vanities, all is vanity'?",
+    "correctAnswer": "Ecclesiastes",
+    "incorrectAnswers": [
+      "Proverbs",
+      "Psalms",
+      "Song of Solomon"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Hard",
+    "reference": "Ecclesiastes 1:2",
+    "explanation": "This fact is recorded in Ecclesiastes 1:2."
+  },
+  {
+    "id": "q78",
+    "question": "In what book does the story of the Tower of Babel appear?",
+    "correctAnswer": "Genesis",
+    "incorrectAnswers": [
+      "Exodus",
+      "Numbers",
+      "Deuteronomy"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "Genesis 11",
+    "explanation": "This fact is recorded in Genesis 11."
+  },
+  {
+    "id": "q79",
+    "question": "Which prophet's book contains the vision of a valley of dry bones?",
+    "correctAnswer": "Ezekiel",
+    "incorrectAnswers": [
+      "Isaiah",
+      "Jeremiah",
+      "Daniel"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Hard",
+    "reference": "Ezekiel 37",
+    "explanation": "This fact is recorded in Ezekiel 37."
+  },
+  {
+    "id": "q80",
+    "question": "What is the longest book in the Bible?",
+    "correctAnswer": "Psalms",
+    "incorrectAnswers": [
+      "Isaiah",
+      "Genesis",
+      "Jeremiah"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Medium",
+    "reference": "Bible Structure",
+    "explanation": "This fact is recorded in Bible Structure."
+  },
+  {
+    "id": "q81",
+    "question": "Finish the verse: 'For the wages of sin is death, but the free gift of God is...'",
+    "correctAnswer": "eternal life in Christ Jesus our Lord.",
+    "incorrectAnswers": [
+      "forgiveness of sins.",
+      "peace on earth.",
+      "salvation by faith."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Romans 6:23",
+    "explanation": "This fact is recorded in Romans 6:23."
+  },
+  {
+    "id": "q82",
+    "question": "According to Matthew 5:14, 'You are the light of the...'",
+    "correctAnswer": "world.",
+    "incorrectAnswers": [
+      "nations.",
+      "earth.",
+      "heavens."
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Easy",
+    "reference": "Matthew 5:14",
+    "explanation": "This fact is recorded in Matthew 5:14."
+  },
+  {
+    "id": "q83",
+    "question": "Finish the verse: 'I have hidden your word in my heart that I might not...'",
+    "correctAnswer": "sin against you.",
+    "incorrectAnswers": [
+      "forget your laws.",
+      "stray from the path.",
+      "fear the wicked."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Psalm 119:11",
+    "explanation": "This fact is recorded in Psalm 119:11."
+  },
+  {
+    "id": "q84",
+    "question": "According to Hebrews 11:1, 'Now faith is the assurance of things hoped for, the conviction of...'",
+    "correctAnswer": "things not seen.",
+    "incorrectAnswers": [
+      "God's promises.",
+      "eternal life.",
+      "what is true."
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Medium",
+    "reference": "Hebrews 11:1",
+    "explanation": "This fact is recorded in Hebrews 11:1."
+  },
+  {
+    "id": "q85",
+    "question": "Finish the verse: 'Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold,...'",
+    "correctAnswer": "the new has come.",
+    "incorrectAnswers": [
+      "all things are made pure.",
+      "the flesh is dead.",
+      "the spirit is alive."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "2 Corinthians 5:17",
+    "explanation": "This fact is recorded in 2 Corinthians 5:17."
+  },
+  {
+    "id": "q86",
+    "question": "What does Psalm 46:1 say God is for us?",
+    "correctAnswer": "Our refuge and strength",
+    "incorrectAnswers": [
+      "Our shield and defender",
+      "Our light and salvation",
+      "Our rock and redeemer"
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Medium",
+    "reference": "Psalm 46:1",
+    "explanation": "This fact is recorded in Psalm 46:1."
+  },
+  {
+    "id": "q87",
+    "question": "Finish the verse (John 11:35), which is the shortest verse in the English Bible: 'Jesus...'",
+    "correctAnswer": "wept.",
+    "incorrectAnswers": [
+      "prayed.",
+      "smiled.",
+      "slept."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Easy",
+    "reference": "John 11:35",
+    "explanation": "This fact is recorded in John 11:35."
+  },
+  {
+    "id": "q88",
+    "question": "According to 1 John 4:8, 'Anyone who does not love does not know God, because God is...'",
+    "correctAnswer": "love.",
+    "incorrectAnswers": [
+      "light.",
+      "holy.",
+      "merciful."
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Easy",
+    "reference": "1 John 4:8",
+    "explanation": "This fact is recorded in 1 John 4:8."
+  },
+  {
+    "id": "q89",
+    "question": "Finish the verse: 'Come to me, all who labor and are heavy laden, and I will give you...'",
+    "correctAnswer": "rest.",
+    "incorrectAnswers": [
+      "peace.",
+      "strength.",
+      "comfort."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Easy",
+    "reference": "Matthew 11:28",
+    "explanation": "This fact is recorded in Matthew 11:28."
+  },
+  {
+    "id": "q90",
+    "question": "Proverbs 1:7 says, 'The fear of the LORD is the beginning of...'",
+    "correctAnswer": "knowledge.",
+    "incorrectAnswers": [
+      "wisdom.",
+      "understanding.",
+      "truth."
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Hard",
+    "reference": "Proverbs 1:7",
+    "explanation": "This fact is recorded in Proverbs 1:7."
+  },
+  {
+    "id": "q91",
+    "question": "Who was swallowed by the earth for rebelling against Moses?",
+    "correctAnswer": "Korah",
+    "incorrectAnswers": [
+      "Dathan and Abiram (only)",
+      "Achan",
+      "Nadab"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Hard",
+    "reference": "Numbers 16",
+    "explanation": "This fact is recorded in Numbers 16."
+  },
+  {
+    "id": "q92",
+    "question": "What city's walls fell down after the Israelites marched around it for seven days?",
+    "correctAnswer": "Jericho",
+    "incorrectAnswers": [
+      "Ai",
+      "Jerusalem",
+      "Hebron"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Easy",
+    "reference": "Joshua 6",
+    "explanation": "This fact is recorded in Joshua 6."
+  },
+  {
+    "id": "q93",
+    "question": "Who was the female judge who led Israel?",
+    "correctAnswer": "Deborah",
+    "incorrectAnswers": [
+      "Ruth",
+      "Esther",
+      "Miriam"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Judges 4",
+    "explanation": "This fact is recorded in Judges 4."
+  },
+  {
+    "id": "q94",
+    "question": "Which prophet confronted King Ahab and the prophets of Baal on Mount Carmel?",
+    "correctAnswer": "Elijah",
+    "incorrectAnswers": [
+      "Elisha",
+      "Isaiah",
+      "Jeremiah"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "1 Kings 18",
+    "explanation": "This fact is recorded in 1 Kings 18."
+  },
+  {
+    "id": "q95",
+    "question": "Who was thrown into the lions' den?",
+    "correctAnswer": "Daniel",
+    "incorrectAnswers": [
+      "Joseph",
+      "David",
+      "Jeremiah"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Easy",
+    "reference": "Daniel 6",
+    "explanation": "This fact is recorded in Daniel 6."
+  },
+  {
+    "id": "q96",
+    "question": "Who was the cupbearer to the king who rebuilt the walls of Jerusalem?",
+    "correctAnswer": "Nehemiah",
+    "incorrectAnswers": [
+      "Ezra",
+      "Zerubbabel",
+      "Mordecai"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Hard",
+    "reference": "Nehemiah 1-2",
+    "explanation": "This fact is recorded in Nehemiah 1-2."
+  },
+  {
+    "id": "q97",
+    "question": "Which queen saved her people (the Jews) from a plot to destroy them?",
+    "correctAnswer": "Esther",
+    "incorrectAnswers": [
+      "Vashti",
+      "Jezebel",
+      "Athaliah"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Esther",
+    "explanation": "This fact is recorded in Esther."
+  },
+  {
+    "id": "q98",
+    "question": "Who was the king of Israel known for his wisdom and having many wives?",
+    "correctAnswer": "Solomon",
+    "incorrectAnswers": [
+      "David",
+      "Saul",
+      "Ahab"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Easy",
+    "reference": "1 Kings 11:1-3",
+    "explanation": "This fact is recorded in 1 Kings 11:1-3."
+  },
+  {
+    "id": "q99",
+    "question": "Which Old Testament figure was sold to Ishmaelite traders for 20 shekels of silver?",
+    "correctAnswer": "Joseph",
+    "incorrectAnswers": [
+      "Benjamin",
+      "Daniel",
+      "Jeremiah"
+    ],
+    "category": "Old Testament",
+    "difficulty": "Medium",
+    "reference": "Genesis 37:28",
+    "explanation": "This fact is recorded in Genesis 37:28."
+  },
+  {
+    "id": "q100",
+    "question": "What was the name of the place where God confused the languages of men?",
+    "correctAnswer": "The Tower of Babel",
+    "incorrectAnswers": [
+      "Sodom",
+      "Gomorrah",
+      "Babylon"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Medium",
+    "reference": "Genesis 11:9",
+    "explanation": "This fact is recorded in Genesis 11:9."
+  },
+  {
+    "id": "q101",
+    "question": "What is the name of the garden where Jesus prayed before His arrest?",
+    "correctAnswer": "Gethsemane",
+    "incorrectAnswers": [
+      "Eden",
+      "Golgotha",
+      "The Mount of Olives"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Medium",
+    "reference": "Matthew 26:36",
+    "explanation": "This fact is recorded in Matthew 26:36."
+  },
+  {
+    "id": "q102",
+    "question": "Who was the Pharisee who came to Jesus by night?",
+    "correctAnswer": "Nicodemus",
+    "incorrectAnswers": [
+      "Joseph of Arimathea",
+      "Caiaphas",
+      "Gamaliel"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "John 3:1",
+    "explanation": "This fact is recorded in John 3:1."
+  },
+  {
+    "id": "q103",
+    "question": "Which disciple was a zealot?",
+    "correctAnswer": "Simon",
+    "incorrectAnswers": [
+      "Matthew",
+      "Judas",
+      "Thomas"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Hard",
+    "reference": "Luke 6:15",
+    "explanation": "This fact is recorded in Luke 6:15."
+  },
+  {
+    "id": "q104",
+    "question": "Who wrote the book of Revelation?",
+    "correctAnswer": "John",
+    "incorrectAnswers": [
+      "Paul",
+      "Peter",
+      "James"
+    ],
+    "category": "Bible Books",
+    "difficulty": "Easy",
+    "reference": "Revelation 1:1",
+    "explanation": "This fact is recorded in Revelation 1:1."
+  },
+  {
+    "id": "q105",
+    "question": "Where was Paul traveling when he encountered the risen Christ?",
+    "correctAnswer": "The road to Damascus",
+    "incorrectAnswers": [
+      "The road to Emmaus",
+      "Jerusalem",
+      "Antioch"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Medium",
+    "reference": "Acts 9:3",
+    "explanation": "This fact is recorded in Acts 9:3."
+  },
+  {
+    "id": "q106",
+    "question": "Who accompanied Paul on his first missionary journey?",
+    "correctAnswer": "Barnabas",
+    "incorrectAnswers": [
+      "Silas",
+      "Timothy",
+      "Luke"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Acts 13:2",
+    "explanation": "This fact is recorded in Acts 13:2."
+  },
+  {
+    "id": "q107",
+    "question": "What was Paul's profession by trade?",
+    "correctAnswer": "Tentmaker",
+    "incorrectAnswers": [
+      "Fisherman",
+      "Carpenter",
+      "Shepherd"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Acts 18:3",
+    "explanation": "This fact is recorded in Acts 18:3."
+  },
+  {
+    "id": "q108",
+    "question": "In which city did Paul preach at the Areopagus?",
+    "correctAnswer": "Athens",
+    "incorrectAnswers": [
+      "Corinth",
+      "Ephesus",
+      "Rome"
+    ],
+    "category": "Bible Places",
+    "difficulty": "Hard",
+    "reference": "Acts 17:22",
+    "explanation": "This fact is recorded in Acts 17:22."
+  },
+  {
+    "id": "q109",
+    "question": "Who fell asleep and fell out of a third-story window while Paul was preaching?",
+    "correctAnswer": "Eutychus",
+    "incorrectAnswers": [
+      "Trophimus",
+      "Timothy",
+      "Apollos"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Hard",
+    "reference": "Acts 20:9",
+    "explanation": "This fact is recorded in Acts 20:9."
+  },
+  {
+    "id": "q110",
+    "question": "Who was the first Christian martyr?",
+    "correctAnswer": "Stephen",
+    "incorrectAnswers": [
+      "James",
+      "Peter",
+      "Paul"
+    ],
+    "category": "Bible Characters",
+    "difficulty": "Medium",
+    "reference": "Acts 7:59-60",
+    "explanation": "This fact is recorded in Acts 7:59-60."
+  },
+  {
+    "id": "q111",
+    "question": "Finish the verse: 'A gentle answer turns away wrath, but a harsh word...'",
+    "correctAnswer": "stirs up anger.",
+    "incorrectAnswers": [
+      "brings destruction.",
+      "ruins a friend.",
+      "causes pain."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Proverbs 15:1",
+    "explanation": "This fact is recorded in Proverbs 15:1."
+  },
+  {
+    "id": "q112",
+    "question": "According to Philippians 4:4, what should we do 'always in the Lord'?",
+    "correctAnswer": "Rejoice",
+    "incorrectAnswers": [
+      "Pray",
+      "Sing",
+      "Hope"
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Easy",
+    "reference": "Philippians 4:4",
+    "explanation": "This fact is recorded in Philippians 4:4."
+  },
+  {
+    "id": "q113",
+    "question": "Finish the verse: 'Draw near to God, and he will...'",
+    "correctAnswer": "draw near to you.",
+    "incorrectAnswers": [
+      "hear your prayer.",
+      "give you peace.",
+      "forgive your sins."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "James 4:8",
+    "explanation": "This fact is recorded in James 4:8."
+  },
+  {
+    "id": "q114",
+    "question": "According to Psalm 119:11, why did the Psalmist hide God's word in his heart?",
+    "correctAnswer": "That he might not sin against God",
+    "incorrectAnswers": [
+      "That he might have wisdom",
+      "That he might find peace",
+      "That he might teach others"
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Medium",
+    "reference": "Psalm 119:11",
+    "explanation": "This fact is recorded in Psalm 119:11."
+  },
+  {
+    "id": "q115",
+    "question": "Finish the verse: 'But seek first the kingdom of God and his righteousness, and all these things...'",
+    "correctAnswer": "will be added to you.",
+    "incorrectAnswers": [
+      "will be yours.",
+      "will be made known.",
+      "will follow you."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Matthew 6:33",
+    "explanation": "This fact is recorded in Matthew 6:33."
+  },
+  {
+    "id": "q116",
+    "question": "According to 2 Timothy 3:16, 'All Scripture is breathed out by God and profitable for...'",
+    "correctAnswer": "teaching, for reproof, for correction, and for training in righteousness.",
+    "incorrectAnswers": [
+      "wisdom, for understanding, and for guidance.",
+      "reading, for studying, and for living well.",
+      "believing, for preaching, and for hoping."
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Hard",
+    "reference": "2 Timothy 3:16",
+    "explanation": "This fact is recorded in 2 Timothy 3:16."
+  },
+  {
+    "id": "q117",
+    "question": "Finish the verse: 'Be kind to one another, tenderhearted, forgiving one another, as God in Christ...'",
+    "correctAnswer": "forgave you.",
+    "incorrectAnswers": [
+      "loved you.",
+      "commanded you.",
+      "showed you."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "Ephesians 4:32",
+    "explanation": "This fact is recorded in Ephesians 4:32."
+  },
+  {
+    "id": "q118",
+    "question": "According to Romans 3:23, who has sinned and fallen short of the glory of God?",
+    "correctAnswer": "All",
+    "incorrectAnswers": [
+      "The wicked",
+      "Unbelievers",
+      "Fools"
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Easy",
+    "reference": "Romans 3:23",
+    "explanation": "This fact is recorded in Romans 3:23."
+  },
+  {
+    "id": "q119",
+    "question": "Finish the verse: 'If we confess our sins, he is faithful and just to forgive us our sins and to...'",
+    "correctAnswer": "cleanse us from all unrighteousness.",
+    "incorrectAnswers": [
+      "give us eternal life.",
+      "make us new creations.",
+      "grant us peace."
+    ],
+    "category": "Finish the Verse",
+    "difficulty": "Medium",
+    "reference": "1 John 1:9",
+    "explanation": "This fact is recorded in 1 John 1:9."
+  },
+  {
+    "id": "q120",
+    "question": "According to Micah 6:8, what does the Lord require of you? To do justice, and to love kindness, and to...",
+    "correctAnswer": "walk humbly with your God.",
+    "incorrectAnswers": [
+      "serve Him with all your heart.",
+      "pray without ceasing.",
+      "keep His commandments."
+    ],
+    "category": "Scripture Memory",
+    "difficulty": "Hard",
+    "reference": "Micah 6:8",
+    "explanation": "This fact is recorded in Micah 6:8."
+  }
+]

@@ -1,0 +1,661 @@
+---
+import Layout from '../layouts/Layout.astro';
+import questionsData from '../data/bible-questions.json';
+---
+
+<Layout title="Devotion Room Bible Trivia | Bible Trivia Game">
+  <div class="container game-wrapper">
+    <div id="bible-trivia-app" data-questions={JSON.stringify(questionsData)} class="trivia-app">
+      
+      <!-- SCREEN 1: MODE SELECT (LANDING) -->
+      <div id="screen-mode" class="screen active">
+        <div class="game-hero text-center animate-fade-in">
+          <h1 class="game-title">BIBLE TRIVIA</h1>
+          <p class="game-subtitle">How well do you know the Bible?</p>
+          
+          <div class="game-badges">
+            <span class="badge">⚡ Test your knowledge</span>
+            <span class="badge">🔥 Build your streak</span>
+            <span class="badge">🏆 Beat your high score</span>
+          </div>
+
+          <p id="global-highscore" class="text-center highscore-display"></p>
+        </div>
+        
+        <h2 class="text-center section-label">CHOOSE YOUR GAME</h2>
+        <div class="modes-grid">
+          <button class="mode-btn interactive-card" data-mode="quick">
+            <div class="mode-icon">⚡</div>
+            <div class="mode-info">
+              <h3>QUICK TRIVIA</h3>
+              <p>10 questions. Anything goes.</p>
+            </div>
+          </button>
+          
+          <button class="mode-btn interactive-card" data-mode="scripture">
+            <div class="mode-icon">📖</div>
+            <div class="mode-info">
+              <h3>SCRIPTURE TRIVIA</h3>
+              <p>How well do you know the Word?</p>
+            </div>
+          </button>
+          
+          <button class="mode-btn interactive-card" data-mode="characters">
+            <div class="mode-icon">👤</div>
+            <div class="mode-info">
+              <h3>BIBLE CHARACTERS</h3>
+              <p>Can you identify them?</p>
+            </div>
+          </button>
+          
+          <button class="mode-btn interactive-card" data-mode="books">
+            <div class="mode-icon">📚</div>
+            <div class="mode-info">
+              <h3>BIBLE BOOKS</h3>
+              <p>Test your knowledge of the books.</p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: GAMEPLAY -->
+      <div id="screen-game" class="screen" style="display: none;">
+        <div class="gameplay-header">
+          <div class="progress-indicator">
+            <span id="progress-text" class="question-count">QUESTION 1 / 10</span>
+          </div>
+          <div class="live-stats">
+            <div class="stat-score">⭐ <span id="score-display" class="score-val">0</span> POINTS</div>
+            <div id="streak-container" class="stat-streak">🔥 STREAK <span id="streak-display">0</span></div>
+          </div>
+        </div>
+
+        <div class="timer-wrapper">
+          <div class="timer-countdown" id="timer-text">20</div>
+          <div class="timer-track">
+            <div id="time-bar" class="time-fill"></div>
+          </div>
+        </div>
+
+        <div class="question-board">
+          <h2 id="question-text" class="question-text">Loading question...</h2>
+          <div id="floating-points" class="floating-points"></div>
+        </div>
+          
+        <div id="answers-grid" class="answers-grid">
+          <!-- Buttons injected by JS -->
+        </div>
+
+        <!-- FEEDBACK OVERLAY / AREA -->
+        <div id="feedback-area" class="feedback-area interactive-card" style="display: none;">
+          <div class="feedback-content text-center">
+            <div class="feedback-header">
+              <span id="feedback-icon" class="feedback-icon"></span>
+              <h3 id="feedback-title" class="feedback-title"></h3>
+            </div>
+            <div id="feedback-reward" class="feedback-reward">
+              <div id="feedback-earned" class="earned-points"></div>
+              <div id="feedback-streak" class="streak-cheer"></div>
+            </div>
+            <div id="feedback-correction" class="feedback-correction">
+              <span id="correction-label"></span>
+              <strong id="feedback-answer" class="correct-answer-text"></strong>
+            </div>
+            <p id="feedback-explanation" class="feedback-explanation"></p>
+            <div class="reference-badge">
+              <span class="icon">📖</span> <span id="feedback-reference"></span>
+            </div>
+            <button id="next-btn" class="btn btn-primary game-btn next-btn">NEXT QUESTION</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: RESULTS -->
+      <div id="screen-result" class="screen" style="display: none;">
+        <div class="results-board interactive-card text-center">
+          <div id="result-icon" class="result-icon">🏆</div>
+          <h2 id="result-greeting" class="result-greeting">NICE WORK!</h2>
+          
+          <div id="highscore-banner" class="highscore-banner" style="display: none;">
+            🎉 NEW HIGH SCORE! 🎉
+          </div>
+
+          <div class="final-score-showcase">
+            <span id="final-score" class="massive-score">0</span>
+            <span class="score-label">POINTS</span>
+          </div>
+          
+          <div class="game-stats-grid">
+            <div class="g-stat">
+              <span class="g-val" id="stat-correct">0</span>
+              <span class="g-label">CORRECT</span>
+            </div>
+            <div class="g-stat">
+              <span class="g-val" id="stat-accuracy">0%</span>
+              <span class="g-label">ACCURACY</span>
+            </div>
+            <div class="g-stat">
+              <span class="g-val streak-val">🔥 <span id="stat-streak">0</span></span>
+              <span class="g-label">BEST STREAK</span>
+            </div>
+          </div>
+          
+          <p id="beat-score-msg" class="beat-score-msg">Can you beat your score next time?</p>
+          
+          <div class="result-actions">
+            <button id="play-again-btn" class="btn btn-primary game-btn action-primary">PLAY AGAIN</button>
+            <button id="home-btn" class="btn btn-secondary game-btn action-secondary">CHOOSE ANOTHER MODE</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</Layout>
+
+<script src="../scripts/bible-trivia.js"></script>
+
+<style>
+  /* Base Layout & Wrapper */
+  .game-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1.5rem var(--spacing-md);
+  }
+  .trivia-app {
+    position: relative;
+    width: 100%;
+  }
+  .text-center { text-align: center; }
+
+  /* Typography Enhancements */
+  .game-title {
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 0.25rem;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+  }
+  .game-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  /* Badges */
+  .game-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .badge {
+    background: var(--color-bg-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+  }
+  .highscore-display {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-accent-secondary);
+    margin-bottom: 1rem;
+  }
+  .section-label {
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  /* Interactive Cards */
+  .interactive-card {
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  
+  /* Mode Select Grid */
+  .modes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  @media (min-width: 600px) {
+    .modes-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .mode-btn {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding: 1rem;
+    cursor: pointer;
+    color: var(--color-text-primary);
+  }
+  .mode-btn:hover, .mode-btn:focus {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-accent-primary);
+    outline: none;
+  }
+  .mode-btn:active {
+    transform: translateY(0) scale(0.98);
+  }
+  .mode-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+    background: var(--color-bg-secondary);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  .mode-info h3 {
+    margin: 0 0 0.15rem 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .mode-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* Gameplay Header */
+  .gameplay-header {
+    margin-bottom: var(--spacing-md);
+  }
+  .progress-indicator {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .question-count {
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-secondary);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-lg);
+  }
+  .live-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: var(--spacing-md);
+  }
+  .score-val {
+    color: var(--color-text-primary);
+  }
+  .stat-streak {
+    color: #F97316; /* Vibrant orange for streak */
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .streak-bump {
+    transform: scale(1.2);
+  }
+
+  /* Timer */
+  .timer-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: var(--spacing-lg);
+  }
+  .timer-countdown {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    width: 40px;
+    text-align: center;
+    color: var(--color-text-primary);
+  }
+  .timer-track {
+    flex-grow: 1;
+    height: 12px;
+    background: var(--color-border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .time-fill {
+    height: 100%;
+    width: 100%;
+    background: var(--color-accent-primary);
+    transition: width 0.1s linear, background-color 0.3s ease;
+  }
+
+  /* Question Area */
+  .question-board {
+    position: relative;
+    padding: var(--spacing-md) 0;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .question-text {
+    font-size: clamp(1.4rem, 4vw, 1.75rem);
+    text-align: center;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .floating-points {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-accent-primary);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Answer Buttons */
+  .answers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .answer-btn {
+    padding: 1.15rem 1.25rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  }
+  @media (hover: hover) {
+    .answer-btn:hover:not(.disabled) {
+      border-color: var(--color-text-primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+  .answer-btn:active:not(.disabled) {
+    transform: translateY(1px);
+  }
+  
+  .answer-btn.correct {
+    background: #166534; /* Stronger green for high contrast */
+    border-color: #166534;
+    color: #FFFFFF;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(22, 101, 52, 0.3);
+    z-index: 2;
+  }
+  .answer-btn.incorrect {
+    background: #991B1B; /* Stronger red */
+    border-color: #991B1B;
+    color: #FFFFFF;
+  }
+  .answer-btn.disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  /* Feedback Overlay Area */
+  .feedback-area {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    border-width: 3px;
+    animation: slideUpFade 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  .feedback-area.is-correct {
+    border-color: #4ADE80;
+    background: #F0FDF4;
+  }
+  .feedback-area.is-incorrect {
+    border-color: #F87171;
+    background: #FEF2F2;
+  }
+  .feedback-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .feedback-icon {
+    font-size: 2rem;
+  }
+  .feedback-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .correct-text { color: #166534; }
+  .incorrect-text { color: #991B1B; }
+
+  .feedback-reward {
+    margin-bottom: 1rem;
+  }
+  .earned-points {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #166534;
+  }
+  .streak-cheer {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #F97316;
+    margin-top: 0.25rem;
+  }
+
+  .feedback-correction {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+  }
+  .correct-answer-text {
+    display: block;
+    font-size: 1.4rem;
+    color: var(--color-text-primary);
+    margin-top: 0.25rem;
+  }
+
+  .feedback-explanation {
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .reference-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-surface);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid var(--color-border);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .game-btn {
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 1.2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Results Screen */
+  .results-board {
+    padding: var(--spacing-xl) var(--spacing-md);
+    border-width: 0;
+    background: var(--color-surface);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+  }
+  .result-icon {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    animation: bounce 2s infinite;
+  }
+  .result-greeting {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0;
+  }
+  
+  .highscore-banner {
+    display: inline-block;
+    background: #FEF08A; /* vibrant yellow */
+    color: #854D0E;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    animation: pulse 1.5s infinite;
+  }
+
+  .final-score-showcase {
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .massive-score {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--color-accent-primary);
+  }
+  .score-label {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-text-secondary);
+  }
+  
+  .game-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: 2rem;
+    background: var(--color-bg-secondary);
+    padding: 1.5rem 1rem;
+    border-radius: var(--radius-md);
+  }
+  .g-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .g-val {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+  }
+  .streak-val {
+    color: #F97316;
+  }
+  .g-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--color-text-secondary);
+  }
+  
+  .beat-score-msg {
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+  }
+
+  .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* Animations */
+  @keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatUpFade {
+    0% { opacity: 0; transform: translate(-50%, -30px) scale(0.8); }
+    20% { opacity: 1; transform: translate(-50%, -50px) scale(1.1); }
+    100% { opacity: 0; transform: translate(-50%, -80px) scale(1); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  .animate-float-points {
+    animation: floatUpFade 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  /* Dark mode specific adjustments */
+  @media (prefers-color-scheme: dark) {
+    .answer-btn.correct {
+      background: #14532D; 
+      border-color: #22C55E;
+      color: #FFFFFF;
+    }
+    .answer-btn.incorrect {
+      background: #7F1D1D;
+      border-color: #EF4444;
+      color: #FFFFFF;
+    }
+    .feedback-area.is-correct {
+      background: rgba(20, 83, 45, 0.3);
+      border-color: #22C55E;
+    }
+    .feedback-area.is-incorrect {
+      background: rgba(127, 29, 29, 0.3);
+      border-color: #EF4444;
+    }
+    .correct-text, .earned-points { color: #4ADE80; }
+    .incorrect-text { color: #F87171; }
+    .highscore-banner {
+      background: #854D0E;
+      color: #FEF08A;
+    }
+  }
+
+  /* Accessibility/Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
