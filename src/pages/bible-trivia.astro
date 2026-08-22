@@ -371,13 +371,17 @@ import questionsData from '../data/bible-questions.json';
   .answers-grid {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem; /* Increased gap for safe tapping on mobile */
   }
   .answer-btn {
-    padding: 1.15rem 1.25rem;
-    font-size: 1.1rem;
+    padding: 1.25rem 1.25rem; /* Generous padding */
+    font-size: 1.15rem; /* Highly readable font size */
+    min-height: 60px; /* Excellent touch target size */
     font-weight: 600;
-    text-align: center;
+    text-align: left; /* Left alignment is much easier to read when wrapping */
+    line-height: 1.4;
+    white-space: normal; /* Ensure text wraps */
+    height: auto;
     background: var(--color-surface);
     border: 2px solid var(--color-border);
     border-radius: var(--radius-sm);
@@ -385,7 +389,20 @@ import questionsData from '../data/bible-questions.json';
     transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     color: var(--color-text-primary);
     font-family: var(--font-body);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+  }
+  
+  @media (min-width: 600px) {
+    .answers-grid {
+      gap: 0.75rem;
+    }
+    .answer-btn {
+      padding: 1.15rem 1.25rem;
+      font-size: 1.1rem;
+      text-align: center; /* Preserve desktop centered appearance */
+      min-height: auto;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
   }
   @media (hover: hover) {
     .answer-btn:hover:not(.disabled) {
