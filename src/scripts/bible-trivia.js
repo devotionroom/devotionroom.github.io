@@ -37,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const feedbackAnswer = document.getElementById('feedback-answer');
   const feedbackExplanation = document.getElementById('feedback-explanation');
   const feedbackReference = document.getElementById('feedback-reference');
-  const nextBtn = document.getElementById('next-btn');
 
   // Results UI
   const finalScore = document.getElementById('final-score');
@@ -60,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let correctCount = 0;
   let incorrectCount = 0;
   let currentTimer = null;
+  let transitionTimeout = null;
   let timeRemaining = 0;
   let timeTotal = 20;
 
@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startGame(mode);
       });
     });
-    nextBtn.addEventListener('click', handleNext);
     playAgainBtn.addEventListener('click', () => startGame(currentMode));
     homeBtn.addEventListener('click', () => showScreen(screenMode));
     
@@ -130,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     correctCount = 0;
     incorrectCount = 0;
     currentIndex = 0;
+    clearTimeout(transitionTimeout);
     
     const config = modeConfig[mode];
     timeTotal = config.time;
@@ -303,8 +303,10 @@ document.addEventListener('DOMContentLoaded', () => {
     feedbackReference.textContent = questionData.reference;
     feedbackArea.style.display = 'block';
     
-    nextBtn.textContent = (currentIndex === pool.length - 1) ? 'SEE RESULTS' : 'NEXT QUESTION';
-    nextBtn.focus();
+    clearTimeout(transitionTimeout);
+    transitionTimeout = setTimeout(() => {
+      handleNext();
+    }, 2000);
   }
 
   function handleNext() {
