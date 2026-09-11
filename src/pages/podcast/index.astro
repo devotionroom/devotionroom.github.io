@@ -1,15 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Parser from 'rss-parser';
-
-let episodes: any[] = [];
-try {
-  const parser = new Parser();
-  const feed = await parser.parseURL('https://anchor.fm/s/115d910a0/podcast/rss');
-  episodes = feed.items || [];
-} catch (error) {
-  console.error("Error fetching podcast RSS:", error);
-}
+import episodes from '../../data/podcast-episodes.json';
 
 // Links provided by user
 const youtubeUrl = "https://www.youtube.com/playlist?list=PLFCuJGX8fChE";
@@ -51,44 +42,38 @@ const spotifyUrl = "https://podcasters.spotify.com/pod/show/grace-adekeye-devoti
         </div>
       ) : (
         <div class="episode-list">
-          {episodes.map((episode) => (
+          {episodes.map((episode: any) => (
             <article class="episode-card">
-              {episode.itunes && episode.itunes.image && (
+              {episode.thumbnail && (
                 <div class="episode-image-wrapper">
-                  <img src={episode.itunes.image} alt={episode.title} class="episode-image" loading="lazy" />
+                  <a href={`https://www.youtube.com/watch?v=${episode.videoId}`} target="_blank" rel="noopener noreferrer">
+                    <img src={episode.thumbnail} alt={episode.title} class="episode-image" loading="lazy" />
+                  </a>
                 </div>
               )}
               <div class="episode-content">
                 <div class="episode-meta">
-                  {episode.pubDate && (
-                    <time class="episode-date" datetime={new Date(episode.pubDate).toISOString()}>
-                      {new Date(episode.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  {episode.publishedAt && (
+                    <time class="episode-date" datetime={episode.publishedAt}>
+                      {new Date(episode.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </time>
                   )}
-                  {episode.itunes && episode.itunes.duration && (
-                    <span class="episode-duration">• {episode.itunes.duration}</span>
-                  )}
-                  {episode.itunes && episode.itunes.episode && (
-                    <span class="episode-number">• Episode {episode.itunes.episode}</span>
-                  )}
                 </div>
-                <h3 class="episode-title">{episode.title}</h3>
+                <h3 class="episode-title">
+                  <a href={`https://www.youtube.com/watch?v=${episode.videoId}`} target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">
+                    {episode.title}
+                  </a>
+                </h3>
                 
-                {/* 
-                  Using set:html for description because RSS descriptions are typically HTML.
-                  Since we control the Anchor feed, this is relatively safe, but in a production 
-                  environment with unknown feeds, this should be sanitized.
-                */}
-                <div class="episode-description" set:html={episode.content || episode.description} />
+                <div class="episode-description">
+                  {episode.description ? (episode.description.length > 250 ? episode.description.substring(0, 250) + '...' : episode.description) : ''}
+                </div>
                 
-                {episode.enclosure && episode.enclosure.url && (
-                  <div class="episode-audio">
-                    <audio controls preload="none" class="audio-player">
-                      <source src={episode.enclosure.url} type={episode.enclosure.type || "audio/mpeg"} />
-                      Your browser does not support the audio element.
-                    </audio>
-                  </div>
-                )}
+                <div class="episode-audio">
+                  <a href={`https://www.youtube.com/watch?v=${episode.videoId}`} target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="display: inline-block; margin-top: 10px;">
+                    Watch on YouTube
+                  </a>
+                </div>
               </div>
             </article>
           ))}
@@ -202,13 +187,18 @@ const spotifyUrl = "https://podcasters.spotify.com/pod/show/grace-adekeye-devoti
   .episode-image-wrapper {
     flex-shrink: 0;
     width: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 16 / 9;
+    align-self: flex-start;
     background-color: var(--color-bg-secondary);
   }
   
   @media (min-width: 768px) {
     .episode-image-wrapper {
-      width: 250px;
+      width: 320px;
+      /* Push down by the content padding + the height of the date text to align with title */
+      margin-top: calc(var(--spacing-lg) + 1.8rem);
+      margin-left: var(--spacing-lg);
+      border-radius: var(--radius-md);
     }
   }
   

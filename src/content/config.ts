@@ -55,6 +55,7 @@ const songs = defineCollection({
     description: z.string().optional(),
     thumbnail: z.string().optional(),
     heroVideo: z.string().optional(),
+    draft: z.boolean().default(false),
     featured: z.boolean().default(false),
     
     // Taxonomy

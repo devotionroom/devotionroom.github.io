@@ -4,7 +4,8 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SongCard from '../../components/SongCard.astro';
 
-const songs = await getCollection('songs');
+const allSongsRaw = await getCollection('songs');
+const songs = allSongsRaw.filter(song => !song.data.draft);
 
 // Split songs by featured and latest
 const featuredSongs = songs.filter(song => song.data.featured);

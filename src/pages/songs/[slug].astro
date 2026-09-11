@@ -3,8 +3,9 @@ import { getCollection } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 
 export async function getStaticPaths() {
-  const songs = await getCollection('songs');
-  return songs.map(song => ({
+  const allSongs = await getCollection('songs');
+  const publishedSongs = allSongs.filter(song => !song.data.draft);
+  return publishedSongs.map(song => ({
     params: { slug: song.slug },
     props: { song },
   }));

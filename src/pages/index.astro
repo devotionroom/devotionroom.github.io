@@ -4,10 +4,12 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import SongCard from '../components/SongCard.astro';
 import ContentCard from '../components/ContentCard.astro';
-import Parser from 'rss-parser';
+import podcastData from '../data/podcast-episodes.json';
+import livestreamsData from '../data/livestreams.json';
 
 // Fetch Collections
-const allSongs = await getCollection('songs');
+const allSongsRaw = await getCollection('songs');
+const allSongs = allSongsRaw.filter(song => !song.data.draft);
 const sortedSongs = allSongs.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 // Featured songs for Hero (songs with heroVideo)
@@ -28,17 +30,8 @@ const heroItems = heroVideoSongs.length > 0
 
 const featuredSong = sortedSongs[0]; // ONE Latest Scripture Song
 
-// Fetch Latest Podcast Episode
-let latestPodcast: any = null;
-try {
-  const parser = new Parser();
-  const feed = await parser.parseURL('https://anchor.fm/s/115d910a0/podcast/rss');
-  if (feed.items && feed.items.length > 0) {
-    latestPodcast = feed.items[0];
-  }
-} catch (error) {
-  console.error("Error fetching podcast RSS:", error);
-}
+// Latest Podcast Episode from JSON
+const latestPodcast = podcastData.length > 0 ? podcastData[0] : null;
 
 // Fallback image for Browse card
 const browseImage = sortedSongs.length > 1 && (sortedSongs[1].data.thumbnail || (sortedSongs[1].data.youtubeId ? `https://img.youtube.com/vi/${sortedSongs[1].data.youtubeId}/hqdefault.jpg` : '')) || '/images/devotion-room-logo.png';
@@ -85,11 +78,11 @@ const browseImage = sortedSongs.length > 1 && (sortedSongs[1].data.thumbnail || 
           {latestPodcast && (
             <ContentCard 
               title={latestPodcast.title || "Latest Episode"}
-              href="/podcast"
-              thumbnail={latestPodcast.itunes?.image || browseImage}
+              href={`https://www.youtube.com/watch?v=${latestPodcast.videoId}`}
+              thumbnail={latestPodcast.thumbnail || browseImage}
               category="Podcast Episode"
-              description={latestPodcast.contentSnippet ? latestPodcast.contentSnippet.substring(0, 100) + '...' : "Short reflections on Scripture, followed by Scripture songs."}
-              buttonText="Listen Now"
+              description={latestPodcast.description ? latestPodcast.description.substring(0, 100) + '...' : "Short reflections on Scripture, followed by Scripture songs."}
+              buttonText="Watch on YouTube"
             />
           )}
         </div>
@@ -110,6 +103,29 @@ const browseImage = sortedSongs.length > 1 && (sortedSongs[1].data.thumbnail || 
       </div>
     </div>
   </section>
+
+  <!-- 4. LATEST LIVESTREAMS (if available) -->
+  {livestreamsData.length > 0 && (
+    <section class="section bg-secondary">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Latest Livestreams</h2>
+        </div>
+        <div class="song-grid">
+          {livestreamsData.map((stream: any) => (
+            <ContentCard 
+              title={stream.title}
+              href={`https://www.youtube.com/watch?v=${stream.videoId}`}
+              thumbnail={stream.thumbnail}
+              category="Livestream"
+              description={stream.description ? stream.description.substring(0, 100) + '...' : "Join our livestream recording."}
+              buttonText="Watch on YouTube"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 </Layout>
 
 <style>

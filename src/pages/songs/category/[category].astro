@@ -5,7 +5,8 @@ import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import SongCard from '../../../components/SongCard.astro';
 
 export async function getStaticPaths() {
-  const songs = await getCollection('songs');
+  const allSongs = await getCollection('songs');
+  const songs = allSongs.filter(song => !song.data.draft);
   
   // Get unique categories and normalize them for URLs
   const categories = [...new Set(songs.map(song => song.data.category))];
