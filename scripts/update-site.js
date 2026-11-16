@@ -97,13 +97,30 @@ async function main() {
 
     // 2. Process Livestreams (sort by newest publication date)
     console.log('\nFetching Livestreams...');
-    const streamItems = await fetchPlaylistAll(playlists.livestreams, youtubeApiKey);
-    const streams = streamItems.map(formatYouTubeItem);
-    // Sort descending by videoPublishedAt
-    streams.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-    const topStreams = streams.slice(0, 5);
+    const livestreamPlaylistIds = Array.isArray(playlists.livestreams)
+      ? playlists.livestreams
+      : [playlists.livestreams];
+
+    const seenStreamVideoIds = new Set();
+    const allStreams = [];
+
+    for (const playlistId of livestreamPlaylistIds) {
+      if (!playlistId) continue;
+      console.log(`  Fetching playlist ${playlistId}...`);
+      const streamItems = await fetchPlaylistAll(playlistId, youtubeApiKey);
+      for (const item of streamItems) {
+        const streamData = formatYouTubeItem(item);
+        if (!streamData.videoId || seenStreamVideoIds.has(streamData.videoId)) continue;
+        seenStreamVideoIds.add(streamData.videoId);
+        allStreams.push(streamData);
+      }
+    }
+
+    // Sort descending by actual video publication date (videoPublishedAt)
+    allStreams.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+    const topStreams = allStreams.slice(0, 5);
     fs.writeFileSync(LIVESTREAMS_JSON, JSON.stringify(topStreams, null, 2));
-    console.log(`Saved ${topStreams.length} latest livestreams.`);
+    console.log(`Saved ${topStreams.length} latest livestreams across ${livestreamPlaylistIds.length} playlist(s).`);
 
     // 3. Process Scripture Songs
     console.log('\nFetching Scripture Songs...');

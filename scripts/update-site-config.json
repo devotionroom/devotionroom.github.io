@@ -1,6 +1,9 @@
 {
     "playlists":  {
-                      "livestreams":  "PLEGA7ze8VEOc",
+        "livestreams": [
+            "PLEGA7ze8VEOc",
+            "PLH5hpFjxUMEw"
+        ],
                       "podcast":  "PLFCuJGX8fChE",
                       "scriptureSongs":  "PLEAkp2Iphe7DVACy_u18L9tL-dEYBzE6L"
                   },
