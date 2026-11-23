@@ -6,32 +6,60 @@ import SongCard from '../components/SongCard.astro';
 import ContentCard from '../components/ContentCard.astro';
 import podcastData from '../data/podcast-episodes.json';
 import livestreamsData from '../data/livestreams.json';
+import excludedVideos from '../data/excluded-videos.json';
 
-// Fetch Collections
+const excludedSet = new Set(excludedVideos.map((v: any) => v.videoId || v));
+
+// Fetch and filter Scripture Songs
 const allSongsRaw = await getCollection('songs');
-const allSongs = allSongsRaw.filter(song => !song.data.draft);
+const allSongs = allSongsRaw.filter(song => {
+  if (song.data.draft) return false;
+  if (song.data.youtubeId && excludedSet.has(song.data.youtubeId)) return false;
+  const title = (song.data.title || '').toLowerCase();
+  if (title.includes('deleted video') || title.includes('private video')) return false;
+  return true;
+});
 const sortedSongs = allSongs.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-// Featured songs for Hero (songs with heroVideo)
-const heroVideoSongs = sortedSongs.filter(song => song.data.heroVideo);
-const heroItems = heroVideoSongs.length > 0 
-  ? heroVideoSongs.map(song => ({
-      shortTitle: song.data.bibleReference ? `${song.data.bibleReference} Song` : song.data.title,
-      thumbnail: song.data.thumbnail || (song.data.youtubeId ? `https://img.youtube.com/vi/${song.data.youtubeId}/maxresdefault.jpg` : undefined),
-      heroVideo: song.data.heroVideo,
-      slug: song.slug
-    }))
-  : sortedSongs.slice(0, 1).map(song => ({
-      shortTitle: song.data.bibleReference ? `${song.data.bibleReference} Song` : song.data.title,
-      thumbnail: song.data.thumbnail || (song.data.youtubeId ? `https://img.youtube.com/vi/${song.data.youtubeId}/maxresdefault.jpg` : undefined),
-      heroVideo: song.data.heroVideo,
-      slug: song.slug
-    }));
+// Filter Podcasts (excluding any deleted/private/blacklisted entries)
+const validPodcasts = podcastData.filter((pod: any) => {
+  if (!pod.videoId || excludedSet.has(pod.videoId)) return false;
+  const title = (pod.title || '').toLowerCase();
+  if (title.includes('deleted video') || title.includes('private video')) return false;
+  return true;
+});
+
+// Prepare candidate items for the 3 Latest Videos Hero Selection
+const songHeroItems = sortedSongs.map(song => ({
+  title: song.data.bibleReference ? `${song.data.bibleReference} Song` : song.data.title,
+  fullTitle: song.data.title,
+  date: song.data.date,
+  youtubeId: song.data.youtubeId,
+  thumbnail: song.data.thumbnail || (song.data.youtubeId ? `https://img.youtube.com/vi/${song.data.youtubeId}/maxresdefault.jpg` : ''),
+  href: `/songs/${song.slug}`,
+  category: 'Scripture Song'
+}));
+
+const podcastHeroItems = validPodcasts.map((pod: any) => ({
+  title: pod.title,
+  fullTitle: pod.title,
+  date: new Date(pod.publishedAt),
+  youtubeId: pod.videoId,
+  thumbnail: pod.thumbnail || `https://img.youtube.com/vi/${pod.videoId}/maxresdefault.jpg`,
+  href: `https://www.youtube.com/watch?v=${pod.videoId}`,
+  category: 'Podcast Episode'
+}));
+
+// Combine Scripture Songs and Podcasts, sort newest first, take top 3 (livestreams strictly excluded)
+const combinedEligibleVideos = [...songHeroItems, ...podcastHeroItems].sort(
+  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+const heroItems = combinedEligibleVideos.slice(0, 3);
 
 const featuredSong = sortedSongs[0]; // ONE Latest Scripture Song
 
-// Latest Podcast Episode from JSON
-const latestPodcast = podcastData.length > 0 ? podcastData[0] : null;
+// Latest Podcast Episode
+const latestPodcast = validPodcasts.length > 0 ? validPodcasts[0] : null;
 
 // Fallback image for Browse card
 const browseImage = sortedSongs.length > 1 && (sortedSongs[1].data.thumbnail || (sortedSongs[1].data.youtubeId ? `https://img.youtube.com/vi/${sortedSongs[1].data.youtubeId}/hqdefault.jpg` : '')) || '/images/devotion-room-logo.png';

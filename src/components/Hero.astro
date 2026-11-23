@@ -1,9 +1,12 @@
 ---
 interface HeroItem {
-  shortTitle?: string;
+  title: string;
+  fullTitle?: string;
+  date?: Date | string;
+  youtubeId?: string;
   thumbnail?: string;
-  heroVideo?: string;
-  slug?: string;
+  href?: string;
+  category?: string;
 }
 
 interface Props {
@@ -11,39 +14,51 @@ interface Props {
 }
 
 const { items = [] } = Astro.props;
-const initialItem = items[0] || {
-  shortTitle: "Helping families grow closer to God",
+
+const initialItem: HeroItem = items[0] || {
+  title: "Helping families grow closer to God",
+  category: "Devotion Room",
+  href: "/songs",
+  thumbnail: "/images/devotion-room-logo.png"
 };
 
+function formatDate(d: any) {
+  if (!d) return '';
+  const dateObj = d instanceof Date ? d : new Date(d);
+  if (isNaN(dateObj.getTime())) return '';
+  return dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+const initialDateStr = formatDate(initialItem.date);
 const hasMultiple = items.length > 1;
-const itemsJson = JSON.stringify(items);
+
+const heroItems = items.map((item, idx) => ({
+  index: idx,
+  title: item.title,
+  fullTitle: item.fullTitle || item.title,
+  category: item.category || 'Featured',
+  date: formatDate(item.date),
+  href: item.href || '#',
+  thumbnail: item.thumbnail || (item.youtubeId ? `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg` : '')
+}));
 ---
 
-<section class="hero section">
+<section class="hero section" id="hero-carousel" aria-roledescription="carousel" aria-label="Latest Videos">
+  <!-- Dynamic Background Images (Cross-fading) -->
   <div id="hero-media-container" class="hero-media-container">
-    {initialItem.heroVideo ? (
-      <div class="hero-bg-video-wrapper">
-        <video 
-          id="hero-video-1"
-          src={initialItem.heroVideo} 
-          class="hero-bg-video active"
-          autoplay 
-          muted 
-          playsinline
-          poster={initialItem.thumbnail}
-        ></video>
-        <video 
-          id="hero-video-2"
-          class="hero-bg-video"
-          muted 
-          playsinline
-        ></video>
-      </div>
+    {items.length > 0 ? (
+      items.map((item, idx) => (
+        <div 
+          class={`hero-bg-image ${idx === 0 ? 'active' : ''}`}
+          data-hero-bg={idx}
+          style={`background-image: url('${item.thumbnail || (item.youtubeId ? `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg` : '/images/devotion-room-logo.png')}');`}
+          aria-hidden={idx === 0 ? "false" : "true"}
+        ></div>
+      ))
     ) : (
       <div 
-        id="hero-image"
-        class="hero-bg-image" 
-        style={`background-image: ${initialItem.thumbnail ? `url(${initialItem.thumbnail})` : 'linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%)'};`}
+        class="hero-bg-image active"
+        style="background-image: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-primary) 100%);"
       ></div>
     )}
   </div>
@@ -52,89 +67,144 @@ const itemsJson = JSON.stringify(items);
   
   <div class="container hero-container">
     <div class="hero-content animate-fade-in" id="hero-content">
-      <h1 id="hero-title" class="hero-title">{initialItem.shortTitle}</h1>
+      <div class="hero-meta">
+        <span id="hero-badge" class="hero-badge">{initialItem.category || 'Featured'}</span>
+        {initialDateStr && <span id="hero-date" class="hero-date">{initialDateStr}</span>}
+      </div>
+
+      <h1 id="hero-title" class="hero-title">{initialItem.title}</h1>
       
       <div class="hero-actions" id="hero-actions">
-        {initialItem.slug ? (
-          <a id="hero-btn-primary" href={`/songs/${initialItem.slug}`} class="btn btn-primary btn-large">
-            <span class="icon-play">▶</span> Watch Now
-          </a>
-        ) : (
-          <a id="hero-btn-primary" href="#resources" class="btn btn-primary btn-large">Explore Resources</a>
-        )}
+        <a id="hero-btn-primary" href={initialItem.href || '#'} class="btn btn-primary btn-large">
+          <span class="icon-play">▶</span> Watch Now
+        </a>
       </div>
+
+      {hasMultiple && (
+        <div class="hero-indicators" role="tablist" aria-label="Hero navigation">
+          {items.map((item, idx) => (
+            <button
+              type="button"
+              class={`hero-indicator ${idx === 0 ? 'active' : ''}`}
+              data-indicator-index={idx}
+              role="tab"
+              aria-selected={idx === 0 ? "true" : "false"}
+              aria-label={`Slide ${idx + 1}: ${item.title}`}
+            >
+              <span class="indicator-bar"></span>
+              <span class="indicator-text">{item.category}</span>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   </div>
 </section>
 
 {hasMultiple && (
-  <script is:inline define:vars={{ itemsJson }}>
+  <script is:inline define:vars={{ heroItems }}>
     document.addEventListener('DOMContentLoaded', () => {
-      const items = JSON.parse(itemsJson);
-      let currentVideoEl = document.getElementById('hero-video-1');
-      let nextVideoEl = document.getElementById('hero-video-2');
-      
-      if (!currentVideoEl || !nextVideoEl || items.length <= 1) return;
+      const items = heroItems;
+      if (!items || items.length <= 1) return;
+
+      const heroSection = document.getElementById('hero-carousel');
+      const titleEl = document.getElementById('hero-title');
+      const badgeEl = document.getElementById('hero-badge');
+      const dateEl = document.getElementById('hero-date');
+      const btnEl = document.getElementById('hero-btn-primary');
+      const contentEl = document.getElementById('hero-content');
+      const bgEls = document.querySelectorAll('[data-hero-bg]');
+      const indicators = document.querySelectorAll('[data-indicator-index]');
 
       let currentIndex = 0;
+      let timer = null;
+      let isPaused = false;
 
-      const titleEl = document.getElementById('hero-title');
-      const btnPrimary = document.getElementById('hero-btn-primary');
-      const contentEl = document.getElementById('hero-content');
-
-      const handleEnded = () => {
-        currentIndex = (currentIndex + 1) % items.length;
+      const showSlide = (nextIndex) => {
+        if (nextIndex === currentIndex) return;
+        currentIndex = nextIndex;
         const nextItem = items[currentIndex];
 
-        // Fade out text
-        contentEl.style.opacity = '0';
-        contentEl.style.transition = 'opacity 0.3s ease';
-
-        setTimeout(() => {
-          // Update text content
-          if (titleEl) titleEl.textContent = nextItem.shortTitle;
-          
-          if (btnPrimary && nextItem.slug) {
-            btnPrimary.href = `/songs/${nextItem.slug}`;
-            btnPrimary.innerHTML = '<span class="icon-play">▶</span> Watch Now';
+        // Update background cross-fade
+        bgEls.forEach((el, idx) => {
+          if (idx === currentIndex) {
+            el.classList.add('active');
+            el.setAttribute('aria-hidden', 'false');
+          } else {
+            el.classList.remove('active');
+            el.setAttribute('aria-hidden', 'true');
           }
+        });
 
-          // Fade back in
-          contentEl.style.opacity = '1';
+        // Update indicators
+        indicators.forEach((btn, idx) => {
+          if (idx === currentIndex) {
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
+          } else {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+          }
+        });
 
-          // Update video source and play
-          if (nextItem.heroVideo) {
-            nextVideoEl.src = nextItem.heroVideo;
-            
-            const playAndSwap = () => {
-              nextVideoEl.oncanplay = null;
-              nextVideoEl.play().catch(e => console.warn('Autoplay prevented:', e));
-              
-              nextVideoEl.classList.add('active');
-              currentVideoEl.classList.remove('active');
-              
-              const temp = currentVideoEl;
-              currentVideoEl = nextVideoEl;
-              nextVideoEl = temp;
+        // Smooth text transition
+        if (contentEl) {
+          contentEl.style.opacity = '0';
+          contentEl.style.transform = 'translateY(4px)';
+          contentEl.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
 
-              setTimeout(() => {
-                nextVideoEl.removeAttribute('src');
-                nextVideoEl.load();
-              }, 1000);
-            };
-
-            if (nextVideoEl.readyState >= 3) {
-              playAndSwap();
-            } else {
-              nextVideoEl.oncanplay = playAndSwap;
-              nextVideoEl.load();
+          setTimeout(() => {
+            if (titleEl) titleEl.textContent = nextItem.title;
+            if (badgeEl) badgeEl.textContent = nextItem.category;
+            if (dateEl) {
+              dateEl.textContent = nextItem.date;
+              dateEl.style.display = nextItem.date ? 'inline' : 'none';
             }
-          }
-        }, 300);
+            if (btnEl && nextItem.href) {
+              btnEl.href = nextItem.href;
+            }
+            contentEl.style.opacity = '1';
+            contentEl.style.transform = 'translateY(0)';
+          }, 250);
+        }
       };
 
-      currentVideoEl.addEventListener('ended', handleEnded);
-      nextVideoEl.addEventListener('ended', handleEnded);
+      const nextSlide = () => {
+        const next = (currentIndex + 1) % items.length;
+        showSlide(next);
+      };
+
+      const startTimer = () => {
+        clearInterval(timer);
+        timer = setInterval(() => {
+          if (!isPaused) {
+            nextSlide();
+          }
+        }, 7000);
+      };
+
+      const pause = () => { isPaused = true; };
+      const resume = () => { isPaused = false; };
+
+      // Pause automatic rotation on user interaction
+      if (heroSection) {
+        heroSection.addEventListener('mouseenter', pause);
+        heroSection.addEventListener('mouseleave', resume);
+        heroSection.addEventListener('focusin', pause);
+        heroSection.addEventListener('focusout', resume);
+        heroSection.addEventListener('touchstart', pause, { passive: true });
+      }
+
+      // Indicator click handlers
+      indicators.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const targetIdx = parseInt(btn.getAttribute('data-indicator-index') || '0', 10);
+          showSlide(targetIdx);
+          startTimer();
+        });
+      });
+
+      startTimer();
     });
   </script>
 )}
@@ -142,13 +212,14 @@ const itemsJson = JSON.stringify(items);
 <style>
   .hero {
     position: relative;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
     overflow: hidden;
     display: flex;
     align-items: center;
-    background-color: var(--color-bg-primary);
-    max-height: 600px;
+    background-color: #0b0f19;
+    min-height: 520px;
+    max-height: 640px;
   }
   
   .hero-media-container {
@@ -161,33 +232,19 @@ const itemsJson = JSON.stringify(items);
   }
 
   .hero-bg-image {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center 30%;
-  }
-
-  .hero-bg-video-wrapper {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #000;
-    position: relative;
-  }
-  
-  .hero-bg-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    background-size: cover;
+    background-position: center 30%;
     opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: opacity 0.8s ease-in-out;
     z-index: 0;
   }
 
-  .hero-bg-video.active {
+  .hero-bg-image.active {
     opacity: 1;
     z-index: 1;
   }
@@ -198,19 +255,18 @@ const itemsJson = JSON.stringify(items);
     left: 0;
     width: 100%;
     height: 100%;
-    /* Subtle gradient overlay for text readability */
     background: linear-gradient(
       to right, 
-      rgba(0, 0, 0, 0.6) 0%,
-      rgba(0, 0, 0, 0.3) 40%,
-      rgba(0, 0, 0, 0) 100%
+      rgba(10, 14, 26, 0.85) 0%,
+      rgba(10, 14, 26, 0.65) 45%,
+      rgba(10, 14, 26, 0.25) 100%
     );
-    z-index: 1;
+    z-index: 2;
   }
   
   .hero-container {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     display: flex;
     justify-content: flex-start;
     text-align: left;
@@ -218,74 +274,166 @@ const itemsJson = JSON.stringify(items);
   }
   
   .hero-content {
-    max-width: 700px;
-    transition: opacity 0.3s ease;
+    max-width: 760px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-badge {
+    background: var(--color-accent-primary, #b8860b);
+    color: #ffffff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.28rem 0.85rem;
+    border-radius: 9999px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+
+  .hero-date {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
   
   .hero-title {
-    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-size: clamp(2rem, 4vw, 3.25rem);
     font-weight: 800;
-    color: #fff;
-    line-height: 1.15;
-    margin-bottom: 1.5rem;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 1.75rem;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
   }
   
   .hero-actions {
     display: flex;
     gap: 1rem;
     justify-content: flex-start;
+    margin-bottom: 2rem;
   }
   
   .btn-large {
-    padding: 0.875rem 1.75rem;
+    padding: 0.875rem 1.85rem;
     font-size: 1.05rem;
+    border-radius: var(--radius-md, 8px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
   }
   
   .icon-play {
     margin-right: 0.5rem;
     font-size: 0.9em;
   }
+
+  /* 3 Subtle Navigation Indicators */
+  .hero-indicators {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    padding-top: 0.5rem;
+  }
+
+  .hero-indicator {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.6rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: rgba(255, 255, 255, 0.65);
+    transition: color 0.3s ease;
+  }
+
+  .hero-indicator:hover,
+  .hero-indicator:focus-visible {
+    color: #ffffff;
+    outline: none;
+  }
+
+  .indicator-bar {
+    display: block;
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.35);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+  }
+
+  .hero-indicator.active .indicator-bar {
+    width: 48px;
+    background: var(--color-accent-primary, #ffffff);
+  }
+
+  .indicator-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.3s ease;
+  }
+
+  .hero-indicator.active .indicator-text {
+    color: #ffffff;
+    font-weight: 700;
+  }
   
   @media (max-width: 768px) {
     .hero {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
+      padding-top: 3.5rem;
+      padding-bottom: 3.5rem;
+      min-height: 480px;
       max-height: none;
     }
     
     .hero-overlay {
-      /* Stronger gradient on mobile to ensure text readability against video */
       background: linear-gradient(
         to bottom, 
-        rgba(0, 0, 0, 0.1) 0%, 
-        rgba(0, 0, 0, 0.6) 50%,
-        rgba(0, 0, 0, 0.8) 100%
+        rgba(10, 14, 26, 0.35) 0%, 
+        rgba(10, 14, 26, 0.75) 50%,
+        rgba(10, 14, 26, 0.95) 100%
       );
     }
     
     .hero-container {
-      text-align: left;
-      justify-content: flex-start;
       align-items: flex-end;
-      min-height: 50vh; /* Ensure video is prominent on mobile */
     }
     
     .hero-title {
       font-size: 1.75rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
     
     .hero-actions {
       flex-direction: column;
       width: 100%;
+      margin-bottom: 1.5rem;
     }
     
     .hero-actions .btn {
       width: 100%;
       text-align: center;
       justify-content: center;
+    }
+
+    .hero-indicators {
+      justify-content: flex-start;
+      gap: 0.75rem;
+    }
+
+    .indicator-text {
+      font-size: 0.75rem;
     }
   }
 </style>
